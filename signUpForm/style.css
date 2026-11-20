@@ -1,0 +1,229 @@
+
+/* Global Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #d8d5ff,
+        #f5f5ff,
+        #dce5ff
+    );
+}
+
+/* Main Container */
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+/* Signup Card */
+.signup-card {
+    width: 40%;
+    max-width: 800px;
+    background: #ffffff;
+    padding: 55px 55px;
+    border-radius: 45px;
+    box-shadow: 0 20px 50px rgba(79, 70, 229, 0.15);
+    text-align: center;
+}
+
+/* Profile Icon */
+.profile-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 10px;
+    background: #e5e7ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #171044;
+    font-size: 65px;
+}
+
+.profile-icon i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fa-user-plus {
+    font-size: 25px;
+}
+
+/* Heading */
+h1 {
+    font-size: 25px;
+    color: #111127;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 15px;
+    color: #777694;
+    margin-bottom: 20px;
+}
+
+/* Form */
+form {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111127;
+    margin-bottom: 10px;
+}
+
+/* Input Box */
+.input-box {
+    height: 40px;
+    border: 2px solid #d3d3e3;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    transition: 0.3s;
+}
+
+.input-box:focus-within {
+    border-color: #5145ed;
+    box-shadow: 0 0 8px rgba(81, 69, 237, 0.15);
+}
+
+.input-box i {
+    font-size: 20px;
+    color: #777694;
+    margin-right: 25px;
+}
+
+.input-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #222;
+    background: transparent;
+}
+
+.input-box input::placeholder {
+    color: #aaaabe;
+}
+
+.input-box .eye-icon {
+    margin-right: 0;
+    cursor: pointer;
+}
+
+/* Signup Button */
+.signup-btn {
+    width: 50%;
+    height: 35px;
+    border: none;
+    border-radius: 25px;
+    display: block;
+    margin: 20px auto;
+    background: linear-gradient(
+        90deg,
+        #5145ed,
+        #453ee5
+    );
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: 0.3s;
+}
+
+.signup-btn i {
+    margin-left: 20px;
+}
+
+.signup-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(81, 69, 237, 0.3);
+}
+
+/* Login Text */
+.login-text {
+    margin-top: 13px;
+    color: #777694;
+    font-size: 15px;
+}
+
+.login-text a {
+    color: #5145ed;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+.login-text a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .signup-card {
+        padding: 35px 22px;
+        border-radius: 25px;
+    }
+
+    .profile-icon {
+        width: 100px;
+        height: 100px;
+        font-size: 45px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .subtitle {
+        font-size: 17px;
+    }
+
+    .form-group label {
+        font-size: 17px;
+    }
+
+    .input-box {
+        height: 60px;
+        padding: 0 15px;
+    }
+
+    .input-box input {
+        font-size: 16px;
+    }
+
+    .input-box i {
+        font-size: 19px;
+        margin-right: 15px;
+    }
+
+    .signup-btn {
+        height: 60px;
+        font-size: 20px;
+    }
+
+    .login-text {
+        font-size: 15px;
+    }
+}
