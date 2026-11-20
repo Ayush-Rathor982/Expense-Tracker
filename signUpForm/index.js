@@ -3,6 +3,7 @@ const path = require('path');
 const db = require('./utils/db-connection')
 
 const userRoutes = require('./routes/userRoutes')
+const expenseRoutes = require('./routes/expenseRoutes')
 
 
 // require('/models')
@@ -15,6 +16,7 @@ app.use(express.json());
 
 
 app.use('/users',userRoutes);
+app.use('/expenses',expenseRoutes);
 
 
 app.get('/', (req, res) => {
@@ -27,6 +29,10 @@ app.get('/signup', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname,"views","login.html"));
+});
+
+app.get('/expense', (req, res) => {
+    res.sendFile(path.join(__dirname,"views","expense.html"));
 });
 
 

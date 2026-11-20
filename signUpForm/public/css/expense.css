@@ -1,0 +1,329 @@
+
+/* =========================
+   GLOBAL STYLING
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: #f5f6fc;
+    color: #252542;
+    padding: 40px 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 80%;
+    margin: auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #635bff, #4338ca);
+    color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin: 0 auto 18px;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+}
+
+header h1 {
+    font-size: 34px;
+    font-weight: 750;
+    margin-bottom: 8px;
+    color: #202044;
+}
+
+header p {
+    font-size: 15px;
+    color: #85859d;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+/* =========================
+   EXPENSE CARD
+========================= */
+
+.expense-card {
+    background: white;
+    padding: 32px;
+    width: 60%;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(35, 35, 80, 0.06);
+    border: 1px solid #ededf5;
+}
+
+.card-heading,
+.list-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.card-heading h2,
+.list-heading h2 {
+    font-size: 22px;
+    color: #242444;
+    margin-bottom: 6px;
+}
+
+.card-heading p,
+.list-heading p {
+    color: #9292a7;
+    font-size: 14px;
+}
+
+.heading-icon {
+    font-size: 28px;
+    color: #6258ed;
+    background: #f0efff;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 650;
+    color: #42425e;
+}
+
+.form-group label i {
+    color: #635bff;
+    margin-right: 7px;
+}
+
+form input,
+form select {
+    width: 100%;
+    height: 50px;
+    padding: 0 15px;
+    border: 1px solid #e1e1ed;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #33334f;
+    background: #fafaff;
+    outline: none;
+    transition: 0.3s;
+}
+
+form input::placeholder {
+    color: #aaaabd;
+}
+
+form input:focus,
+form select:focus {
+    border-color: #635bff;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.10);
+}
+
+/* =========================
+   ADD BUTTON
+========================= */
+
+.add-btn {
+    width: 100%;
+    height: 52px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #635bff, #4338ca);
+    color: white;
+    font-size: 15px;
+    font-weight: 650;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: 0.3s;
+}
+
+.add-btn i {
+    margin-right: 8px;
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(79, 70, 229, 0.25);
+}
+
+/* =========================
+   EXPENSE LIST
+========================= */
+
+.expense-list-section {
+    background: white;
+    padding: 28px 32px;
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid #ededf5;
+    box-shadow: 0 8px 30px rgba(35, 35, 80, 0.06);
+}
+
+.list-heading {
+    margin-bottom: 22px;
+}
+
+.list-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0efff;
+    color: #635bff;
+    border-radius: 12px;
+    font-size: 19px;
+}
+
+/* Expense Items */
+
+#expenseList {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+    /* justify-content: space-between; */
+}
+
+#expenseList li {
+    background: #fafaff;
+    border: 1px solid #d9d9dc;
+    border-left: 4px solid #635bff;
+    border-radius: 10px;
+    padding: 18px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #33334f;
+    transition: 0.3s;
+}
+
+#expenseList li:hover {
+    transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(35, 35, 80, 0.06);
+}
+
+#expenseList li p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Delete Button */
+
+#expenseList li button {
+    align-self: flex-end;
+    padding: 9px 15px;
+    background: #fff0f0;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#expenseList li button:hover {
+    background: #dc2626;
+    color: white;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+    margin-top: 35px;
+    color: #9999ac;
+    font-size: 13px;
+}
+
+footer i {
+    color: #ef4444;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 25px 14px;
+    }
+
+    header h1 {
+        font-size: 27px;
+    }
+
+    .expense-card,
+    .expense-list-section {
+        padding: 22px 18px;
+        border-radius: 14px;
+    }
+
+    .card-heading h2,
+    .list-heading h2 {
+        font-size: 19px;
+    }
+
+    .heading-icon {
+        font-size: 22px;
+        padding: 12px;
+    }
+
+    .form-group {
+        gap: 8px;
+    }
+
+    footer {
+        font-size: 12px;
+    }
+}
