@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up Form</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/style.css">
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet"
@@ -23,7 +23,7 @@
             <h1>Create Account</h1>
             <p class="subtitle">Join us and get started today!</p>
 
-            <form>
+            <form onsubmit="handleSubmit(event)">
 
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -79,5 +79,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 </html>
