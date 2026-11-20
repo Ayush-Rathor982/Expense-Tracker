@@ -1,4 +1,5 @@
 const Users = require('../models/Users')
+const bcrypt = require('bcrypt')
 
 // const getExpenses = async (req,res) => {
 //     try {
@@ -20,10 +21,18 @@ const addUser = async (req,res) => {
     console.log("received signup data: ",req.body)
 
     try {
-        const user = await Users.create({
-            ...req.body
-        });
 
+        const {name, email, password} = req.body;
+
+        const saltRounds = 10
+
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const user = await Users.create({
+            name,
+            email,
+            password : hashedPassword
+        });
 
         return res.status(201).json(user);
 
@@ -52,7 +61,9 @@ const checkUser = async (req,res) => {
 
         console.log(user)
 
-        if(user.password != password){
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if(!isMatch){
             return res.status(401).send("Wrong Password");
         }
 
