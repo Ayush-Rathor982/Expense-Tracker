@@ -17,7 +17,7 @@ const Users = require('../models/Users')
 // }
 
 const addUser = async (req,res) => {
-    console.log("received data: ",req.body)
+    console.log("received signup data: ",req.body)
 
     try {
         const user = await Users.create({
@@ -31,6 +31,39 @@ const addUser = async (req,res) => {
         res.status(500).send("Error while SignUp ",error.message);
     }
 }
+
+
+const checkUser = async (req,res) => {
+    console.log("received login data: ",req.body)
+
+    try {
+
+        const {email, password} = req.body;
+
+        const user = await Users.findOne({
+            where : {
+                email : email
+            }
+        });
+
+        if(!user){
+            return res.status(404).send("User not found with email");
+        }
+
+        console.log(user)
+
+        if(user.password != password){
+            return res.status(401).send("Wrong Password");
+        }
+
+        return res.status(200).json(user);
+
+    } catch (error) {
+        res.status(500).send("Error while LogIn ",error.message);
+    }
+}
+
+
 
 // const deleteExpense = async (req,res) => {
 //     try {
@@ -57,6 +90,7 @@ const addUser = async (req,res) => {
 
 module.exports = {
     addUser,
+    checkUser,
     // getExpenses,
     // deleteExpense
 }
