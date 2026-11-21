@@ -3,7 +3,11 @@ const Expenses = require('../models/Expenses')
 const getExpenses = async (req,res) => {
     try {
         
-        const expenses = await Expenses.findAll();
+        const expenses = await Expenses.findAll({
+            where : {
+                userId : req.user.id
+            }
+        });
 
         if(expenses.length === 0){
              return res.status(404).send("expense not found");
@@ -21,7 +25,8 @@ const addExpense = async (req,res) => {
 
     try {
         const expense = await Expenses.create({
-            ...req.body
+            ...req.body,
+            userId : req.user.id
         });
 
         if(!expense){
@@ -42,7 +47,8 @@ const deleteExpense = async (req,res) => {
 
         const expense = await Expenses.destroy({
             where : {
-                id : id
+                id : id,
+                userId : req.user.id
             }
         });
 

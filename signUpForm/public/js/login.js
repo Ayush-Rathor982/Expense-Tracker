@@ -23,6 +23,11 @@ async function isValidUser(user) {
 
         console.log(result.data);
         alert("user loged in successfully!");
+
+        const token = result.data.token;
+        localStorage.setItem('token', token);
+
+        console.log("token: ",token)
         
         window.location.href = 'http://localhost:3000/expense';
         // display(result.data)

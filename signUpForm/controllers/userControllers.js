@@ -1,5 +1,8 @@
 const Users = require('../models/Users')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
+
+const mySecretKey = '180ab620f1708bb009f3e820bd5c9a6006bd30307fdba42b3050b602903860cf14301e392fe6849ee99ed5ac27ebca96bc9ab6d7eb8544df6c6ea9942a6932e3';
 
 // const getExpenses = async (req,res) => {
 //     try {
@@ -41,6 +44,10 @@ const addUser = async (req,res) => {
     }
 }
 
+function generateAccessToken(id){
+    return jwt.sign({userId:id}, mySecretKey);
+}
+
 
 const checkUser = async (req,res) => {
     console.log("received login data: ",req.body)
@@ -67,7 +74,11 @@ const checkUser = async (req,res) => {
             return res.status(401).send("Wrong Password");
         }
 
-        return res.status(200).json(user);
+        return res.status(200).json({
+            success : true,
+            message : "User Loged In Successfully",
+            token : generateAccessToken(user.id)
+        });
 
     } catch (error) {
         res.status(500).send("Error while LogIn ",error.message);

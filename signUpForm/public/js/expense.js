@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const expenses = await axios.get('http://localhost:3000/expenses');
+    const token = localStorage.getItem('token');
+    const expenses = await axios.get('http://localhost:3000/expenses',{headers:{'Authorization' : token}});
 
     for(let i=0; i<expenses.data.length; i++){
         display(expenses.data[i]);
@@ -12,8 +13,6 @@ function handleExpenseForm(event) {
     event.preventDefault();
 
     let form = event.target;
-
-    let editId = sessionStorage.getItem('editId');
 
     let expense = {
         // id: editId || Date.now().toString(),
@@ -92,9 +91,12 @@ function display(expense) {
 
 async function addData(expense) {
     try {
+        const token = localStorage.getItem('token');
+
         const result = await axios.post(
             'http://localhost:3000/expenses',
-            expense
+            expense,
+            {headers:{'Authorization' : token}},
         );
 
         console.log(result.data);
@@ -112,7 +114,12 @@ async function deleteData(expenseId, li) {
     
     try {
 
-        const res = await axios.delete(`http://localhost:3000/expenses/${expenseId}`)
+        const token = localStorage.getItem('token');
+
+        const res = await axios.delete(
+            `http://localhost:3000/expenses/${expenseId}`,
+            {headers:{'Authorization' : token}}
+        )
 
         if(res.status == 200){
             li.remove()
