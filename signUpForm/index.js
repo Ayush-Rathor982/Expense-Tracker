@@ -4,7 +4,7 @@ const db = require('./utils/db-connection')
 
 const userRoutes = require('./routes/userRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
-
+const paymentRoutes = require('./routes/paymentRoutes');
 
 // require('/models')
 
@@ -18,22 +18,30 @@ app.use(express.json());
 app.use('/users',userRoutes);
 app.use('/expenses',expenseRoutes);
 
+app.use('/', paymentRoutes);
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname,"views","signup.html"));
-});
 
-app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname,"views","signup.html"));
-});
 
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname,"views","login.html"));
-});
 
-app.get('/expense', (req, res) => {
-    res.sendFile(path.join(__dirname,"views","expense.html"));
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname,"views","signup.html"));
+// });
+
+// app.get('/signup', (req, res) => {
+//     res.sendFile(path.join(__dirname,"views","signup.html"));
+// });
+
+// app.get('/login', (req, res) => {
+//     res.sendFile(path.join(__dirname,"views","login.html"));
+// });
+
+// app.get('/expense', (req, res) => {
+//     res.sendFile(path.join(__dirname,"views","expense.html"));
+// });
+
+// app.get('/payment', (req, res) => {
+//     res.sendFile(path.join(__dirname,"views","payment.html"));
+// });
 
 
 db.sync({force:true}).then(()=>{
