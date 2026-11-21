@@ -1,0 +1,570 @@
+
+/* =====================================
+   GLOBAL STYLES
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f6fa;
+    color: #252a40;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+/* =====================================
+   NAVBAR
+===================================== */
+
+.navbar {
+    width: 100%;
+    min-height: 75px;
+    padding: 0 7%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 23px;
+    font-weight: 700;
+    color: #252a40;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+    background: #6655d9;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 19px;
+}
+
+.brand-highlight {
+    color: #6655d9;
+}
+
+.premium-btn {
+    text-decoration: none;
+    background: linear-gradient(135deg, #f6b93b, #ed9b15);
+    color: #ffffff;
+    padding: 11px 20px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    transition: 0.2s ease;
+}
+
+.premium-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(237, 155, 21, 0.25);
+}
+
+
+/* =====================================
+   MAIN CONTAINER
+===================================== */
+
+.main-container {
+    width: 86%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+
+/* =====================================
+   WELCOME SECTION
+===================================== */
+
+.welcome-section {
+    margin-bottom: 25px;
+}
+
+.welcome-section h1 {
+    font-size: 27px;
+    color: #252a40;
+    margin-bottom: 8px;
+}
+
+.welcome-section p {
+    color: #85899b;
+    font-size: 14px;
+}
+
+
+/* =====================================
+   SECTION HEADING
+===================================== */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 24px;
+}
+
+.heading-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 11px;
+    background: #eeeaff;
+    color: #6655d9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-heading h2 {
+    font-size: 19px;
+    color: #252a40;
+    margin-bottom: 5px;
+}
+
+.section-heading p {
+    font-size: 13px;
+    color: #85899b;
+}
+
+
+/* =====================================
+   EXPENSE FORM CARD
+===================================== */
+
+.expense-form-card {
+    background: #ffffff;
+    padding: 27px;
+    border-radius: 14px;
+    border: 1px solid #e9eaf0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.035);
+    margin-bottom: 35px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.form-group label {
+    color: #454a5e;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.input-wrapper {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 13px;
+    border: 1px solid #e1e3eb;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #85899b;
+    transition: 0.2s;
+}
+
+.input-wrapper:focus-within {
+    border-color: #6655d9;
+    box-shadow: 0 0 0 3px rgba(102, 85, 217, 0.09);
+}
+
+.input-wrapper input,
+.input-wrapper select {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #252a40;
+    font-size: 13px;
+}
+
+.input-wrapper input::placeholder {
+    color: #a5a8b5;
+}
+
+.input-wrapper select {
+    cursor: pointer;
+}
+
+.add-expense-btn {
+    margin-top: 23px;
+    background: #6655d9;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    transition: 0.2s;
+}
+
+.add-expense-btn:hover {
+    background: #5543c4;
+    transform: translateY(-1px);
+}
+
+
+/* =====================================
+   EXPENSE LIST
+===================================== */
+
+.expenses-section {
+    margin-bottom: 30px;
+}
+
+.expenses-heading {
+    justify-content: space-between;
+    margin-bottom: 17px;
+}
+
+.expense-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+/* Basic styling for dynamically generated expense items */
+
+.expense-list > div {
+    background: #ffffff;
+    border: 1px solid #e9eaf0;
+    border-radius: 11px;
+    padding: 18px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.025);
+}
+
+
+/* =====================================
+   LEADERBOARD CARD
+===================================== */
+
+.leaderboard-card {
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto 20px;
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #e8eaf0;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.045);
+}
+
+.leaderboard-card[hidden] {
+    display: none;
+}
+
+
+/* Leaderboard Header */
+
+.leaderboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.leaderboard-title {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.leaderboard-icon {
+    width: 45px;
+    height: 45px;
+    background: #fff5dc;
+    color: #d99b12;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+
+.leaderboard-title h2 {
+    font-size: 20px;
+    color: #252a40;
+    margin-bottom: 5px;
+}
+
+.leaderboard-title p {
+    font-size: 13px;
+    color: #85899b;
+}
+
+.leaderboard-badge {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #fff7df;
+    color: #b77908;
+    padding: 9px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* Leaderboard Table */
+
+.leaderboard-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.leaderboard-table thead {
+    background: #f7f8fc;
+}
+
+.leaderboard-table th {
+    padding: 14px 18px;
+    color: #777d91;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.leaderboard-table td {
+    padding: 15px 18px;
+    border-bottom: 1px solid #f0f1f5;
+    color: #35394d;
+    font-size: 14px;
+}
+
+.leaderboard-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.leaderboard-table tbody tr {
+    transition: background 0.2s;
+}
+
+.leaderboard-table tbody tr:hover {
+    background: #f9faff;
+}
+
+
+/* Rank Styling */
+
+.rank {
+    font-weight: 700;
+    color: #777d91;
+}
+
+.rank.first {
+    color: #d99b12;
+}
+
+.rank.second {
+    color: #8b95a5;
+}
+
+.rank.third {
+    color: #b8794b;
+}
+
+
+/* User Information */
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-weight: 600;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eeeaff;
+    color: #7055d9;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+
+/* Expense Amount */
+
+.expense-amount {
+    font-weight: 700;
+    color: #252a40;
+}
+
+
+/* =====================================
+   LEADERBOARD BUTTON
+===================================== */
+
+.leaderboard-action {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+}
+
+.leaderboard-btn {
+    padding: 13px 24px;
+    background: #ffffff;
+    color: #6655d9;
+    border: 1px solid #6655d9;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    transition: 0.2s;
+}
+
+.leaderboard-btn:hover {
+    background: #6655d9;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(102, 85, 217, 0.18);
+}
+
+
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
+
+@media (max-width: 900px) {
+
+    .main-container {
+        width: 92%;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .expense-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 0 4%;
+        min-height: 65px;
+    }
+
+    .nav-brand {
+        font-size: 18px;
+        gap: 8px;
+    }
+
+    .logo {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+
+    .premium-btn {
+        padding: 9px 12px;
+        font-size: 12px;
+    }
+
+    .main-container {
+        width: 92%;
+        margin: 25px auto;
+    }
+
+    .welcome-section h1 {
+        font-size: 22px;
+    }
+
+    .expense-form-card {
+        padding: 19px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+
+    .expense-list {
+        grid-template-columns: 1fr;
+    }
+
+    .leaderboard-card {
+        padding: 16px;
+    }
+
+    .leaderboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 12px 9px;
+        font-size: 12px;
+    }
+
+    .leaderboard-title h2 {
+        font-size: 18px;
+    }
+
+    .leaderboard-title p {
+        font-size: 11px;
+    }
+
+    .user-avatar {
+        width: 29px;
+        height: 29px;
+        min-width: 29px;
+    }
+
+}

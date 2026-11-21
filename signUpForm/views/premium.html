@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Tracker</title>
+
+    <link rel="stylesheet" href="/css/premium.css">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    >
+</head>
+
+<body>
+     
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <div class="nav-brand">
+            <div class="logo">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+
+            <span>
+                Expense<span class="brand-highlight">Tracker</span>
+            </span>
+        </div>
+
+        <!-- <a href="/payment" class="premium-btn">
+            <i class="fa-solid fa-crown"></i>
+            Get Premium
+        </a> -->
+
+    </nav>
+
+
+    <main class="main-container">
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+
+            <div>
+                <h1>Manage Your Expenses</h1>
+                <p>Track your spending and manage your money smarter.</p>
+            </div>
+
+        </section>
+
+
+        <!-- Add Expense Section -->
+        <section class="expense-form-card">
+
+            <div class="section-heading">
+                <div class="heading-icon">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+
+                <div>
+                    <h2>Add New Expense</h2>
+                    <p>Enter your expense details below.</p>
+                </div>
+            </div>
+
+
+            <form onsubmit="handleExpenseForm(event)" id="expenseForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="expenseAmount">
+                            Expense Amount
+                        </label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                            <input
+                                type="number"
+                                id="expenseAmount"
+                                placeholder="Enter amount"
+                                min="0.01"
+                                step="0.01"
+                                required
+                            >
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-pen"></i>
+
+                            <input
+                                type="text"
+                                id="description"
+                                placeholder="Enter description"
+                                required
+                            >
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-list"></i>
+
+                            <select id="category" required>
+
+                                <option value="" disabled selected>
+                                    Select category
+                                </option>
+
+                                <option value="Food">Food</option>
+                                <option value="Fuel">Fuel</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Other">Other</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="add-expense-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Expense
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Expense List Section -->
+        <section class="expenses-section">
+
+            <div class="section-heading expenses-heading">
+
+                <div>
+                    <h2>Your Expenses</h2>
+                    <p>Keep track of your recent transactions.</p>
+                </div>
+
+            </div>
+
+
+            <div class="expense-list" id="expenseList">
+
+                <!-- Expenses will be added dynamically -->
+
+            </div>
+
+        </section>
+
+
+        <!-- Leaderboard Section -->
+        <section class="leaderboard-card" id="leaderboardSection" hidden>
+
+            <div class="leaderboard-header">
+
+                <div class="leaderboard-title">
+
+                    <div class="leaderboard-icon">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+
+                    <div>
+                        <h2>Leaderboard</h2>
+                        <p>See how your expenses compare with others.</p>
+                    </div>
+
+                </div>
+
+
+                <span class="leaderboard-badge">
+                    <i class="fa-solid fa-crown"></i>
+                    Top Spenders
+                </span>
+
+            </div>
+
+
+            <div class="leaderboard-table-wrapper">
+
+                <table class="leaderboard-table">
+
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>User</th>
+                            <th>Total Expenses</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="leaderboardBody">
+
+                        <!-- Leaderboard data will be added dynamically -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- Leaderboard Button -->
+        <div class="leaderboard-action">
+
+            <button
+                type="button"
+                id="showLeaderboardBtn"
+                class="leaderboard-btn"
+            >
+                <i class="fa-solid fa-trophy"></i>
+                Show Leaderboard
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Your existing expense JavaScript -->
+    <script src="/js/premium.js"></script>
+
+</body>
+</html>

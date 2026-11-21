@@ -1,4 +1,6 @@
+const { Sequelize } = require('sequelize');
 const Expenses = require('../models/Expenses')
+const Users = require('../models/Users')
 
 const getExpenses = async (req,res) => {
     try {
@@ -64,8 +66,59 @@ const deleteExpense = async (req,res) => {
     }
 }
 
+
+// const getTotalExpensesByUsers = async (req, res) => {
+//     try {
+
+//         const expenses = await Expenses.findAll({
+//             attributes: [
+//                 'userId',
+//                 [
+//                     Sequelize.fn('SUM', Sequelize.col('expenseAmount')),
+//                     'totalExpense'
+//                 ],
+//                 [
+//                     Sequelize.col('User.name'),
+//                     'name'
+//                 ]
+//             ],
+//             include: [
+//                 {
+//                     model: Users,
+//                     attributes: []
+//                 }
+//             ],
+//             group: [
+//                 'expenses.userId',
+//                 'User.id',
+//                 'User.name'
+//             ],
+//             order: [
+//                 [Sequelize.literal('totalExpense'), 'DESC']
+//             ],
+//             raw: true
+//         });
+
+//         return res.status(200).json({
+//             success: true,
+//             expenses
+//         });
+
+//     } catch (error) {
+//         console.error("Error fetching expenses:", error);
+
+//         return res.status(500).json({
+//             success: false,
+//             message: "Error while fetching expenses",
+//             error: error.message
+//         });
+//     }
+// };
+
+
 module.exports = {
     addExpense,
     getExpenses,
-    deleteExpense
+    deleteExpense,
+    // getTotalExpensesByUsers
 }

@@ -5,8 +5,9 @@ const db = require('./utils/db-connection')
 const userRoutes = require('./routes/userRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
 const paymentRoutes = require('./routes/paymentRoutes');
+const premiumRoutes = require('./routes/premiumRoutes');
 
-// require('/models')
+require('./models')
 
 const app = express();
 
@@ -17,8 +18,8 @@ app.use(express.json());
 
 app.use('/users',userRoutes);
 app.use('/expenses',expenseRoutes);
-
 app.use('/payment', paymentRoutes);
+app.use('/premium',premiumRoutes)
 
 
 
@@ -38,6 +39,12 @@ app.get('/login', (req, res) => {
 app.get('/expense', (req, res) => {
     res.sendFile(path.join(__dirname,"views","expense.html"));
 });
+
+
+app.get('/premium', (req, res) => {
+    res.sendFile(path.join(__dirname,"views","premium.html"));
+});
+
 
 
 
