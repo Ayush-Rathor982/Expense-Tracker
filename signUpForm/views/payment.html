@@ -4,33 +4,83 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cashfree Checkout Integration</title>
+    <title>Secure Payment | Expense Tracker</title>
 
     <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/payment.css">
 </head>
 
 <body>
 
-    <div class="row">
+    <div class="payment-container">
 
-        <h2>Complete Your Payment</h2>
+        <!-- Header -->
+        <div class="payment-header">
 
-        <p>Click below to proceed with your payment.</p>
+            <div class="logo">₹</div>
 
-        <button type="button" id="renderBtn">
-            Proceed to Pay
+            <h2>Complete Your Payment</h2>
+
+            <p>You're one step away from completing your transaction.</p>
+
+        </div>
+
+        <hr class="divider">
+
+        <!-- Payment Summary -->
+        <div class="payment-summary">
+
+            <h3 class="section-title">Payment Summary</h3>
+
+            <div class="summary-row">
+                <span>Product</span>
+                <strong>Expense Tracker Premium</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Payment Method</span>
+                <strong>Online Payment</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Currency</span>
+                <strong>INR (₹)</strong>
+            </div>
+
+            <hr class="divider">
+
+            <div class="total-row">
+                <span>Total Amount</span>
+                <div class="total-amount">₹2,000</div>
+            </div>
+
+        </div>
+
+        <!-- Payment Button -->
+        <button type="button" id="renderBtn" class="pay-button">
+            Proceed to Pay →
         </button>
 
+        <!-- Cashfree Checkout -->
         <div id="cf_checkout"></div>
+
+        <!-- Security Information -->
+        <div class="secure-info">
+            <span>🔒</span>
+            Secure payment powered by Cashfree
+        </div>
+
+        <div class="payment-footer">
+            © 2026 Expense Tracker. All rights reserved.
+        </div>
 
     </div>
 
-    <script src="/js/cashfreeWeb_modal.js"></script>
+    <script src="/js/payment/cashfreeWeb_modal.js"></script>
 
 </body>
+
 </html>

@@ -26,7 +26,7 @@ exports.processPayment = async (req, res) => {
     const orderCurrency = "INR";
 
     const customerID = "1";
-    const customerPhone = "9999999999";
+    const customerPhone = "7976821870";
 
     try {
 
@@ -38,13 +38,15 @@ exports.processPayment = async (req, res) => {
             customerPhone
         );
 
-        await Payment.create({
-            orderId,
-            paymentSessionId,
-            orderAmount,
-            orderCurrency,
-            paymentStatus: "Pending"
-        });
+        console.log("Payment session: ", paymentSessionId);
+
+        // await Payment.create({
+        //     orderId,
+        //     paymentSessionId,
+        //     orderAmount,
+        //     orderCurrency,
+        //     paymentStatus: "Pending"
+        // });
 
         return res.status(201).json({
             paymentSessionId,
@@ -69,21 +71,25 @@ exports.checkPaymentStatus = async (req, res) => {
 
         const { orderId } = req.params;
 
-        const payment = await Payment.findOne({
-            where: { orderId }
-        });
+        // const payment = await Payment.findOne({
+        //     where: { orderId }
+        // });
 
-        if (!payment) {
-            return res.status(404).json({
-                message: "Payment record not found"
-            });
-        }
+        // if (!payment) {
+        //     return res.status(404).json({
+        //         message: "Payment record not found"
+        //     });
+        // }
+
+        console.log("order id: ", orderId);
 
         const orderStatus = await getPaymentStatus(orderId);
 
-        await payment.update({
-            paymentStatus: orderStatus
-        });
+        console.log("order status: ",orderStatus)
+
+        // await payment.update({
+        //     paymentStatus: orderStatus
+        // });
 
         return res.status(200).json({
             orderId,

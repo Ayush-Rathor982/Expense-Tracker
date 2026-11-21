@@ -1,11 +1,7 @@
 
 const { Cashfree, CFEnvironment } = require('cashfree-pg');
 
-const cashfree = new Cashfree(
-    CFEnvironment.SANDBOX,
-    process.env.CASHFREE_CLIENT_ID,
-    process.env.CASHFREE_CLIENT_SECRET
-);
+const cashfree = new Cashfree(CFEnvironment.SANDBOX, "TEST430329ae80e0f32e41a393d78b923034", "TESTaf195616268bd6202eeb3bf8dc458956e7192a85");
 
 const API_VERSION = "2023-08-01";
 
@@ -55,7 +51,6 @@ exports.createOrder = async (
 exports.getPaymentStatus = async (orderId) => {
     try {
         const response = await cashfree.PGOrderFetchPayments(
-            API_VERSION,
             orderId
         );
 

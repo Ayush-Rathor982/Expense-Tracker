@@ -10,7 +10,6 @@
 
     <link rel="stylesheet" href="/css/expense.css">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -19,17 +18,32 @@
 
     <div class="container">
 
-        <header>
-            <div class="logo">
-                <i class="fa-solid fa-wallet"></i>
+        <!-- Navigation -->
+        <nav class="navbar">
+
+            <div class="nav-brand">
+                <div class="logo">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <span>Expense<span class="brand-highlight">Tracker</span></span>
             </div>
 
-            <h1>Expense Tracker</h1>
-            <p>Manage your expenses smartly and easily.</p>
+            <a href="/payment" class="premium-btn">
+                <i class="fa-solid fa-crown"></i>
+                Get Premium
+            </a>
+
+        </nav>
+
+        <!-- Header -->
+        <header>
+            <h1>Manage Your Money Smarter</h1>
+            <p>Track your spending, stay organized, and take control of your finances.</p>
         </header>
 
         <main>
 
+            <!-- Add Expense Card -->
             <section class="expense-card">
 
                 <div class="card-heading">
@@ -38,7 +52,9 @@
                         <p>Enter your expense details below</p>
                     </div>
 
-                    <i class="fa-solid fa-receipt heading-icon"></i>
+                    <div class="heading-icon">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
                 </div>
 
                 <form onsubmit="handleExpenseForm(event)">
@@ -83,9 +99,9 @@
 
                         <select id="category" name="category" required>
                             <option value="">Select a category</option>
-                            <option value="fuel">Fuel</option>
-                            <option value="flood">Food</option>
-                            <option value="electricity">Electricity</option>
+                            <option value="Fuel">Fuel</option>
+                            <option value="Food">Food</option>
+                            <option value="Electricity">Electricity</option>
                             <option value="Movie">Movie</option>
                             <option value="Bills">Bills</option>
                             <option value="Healthcare">Healthcare</option>
@@ -103,6 +119,7 @@
 
             </section>
 
+            <!-- Expense List -->
             <section class="expense-list-section">
 
                 <div class="list-heading">
@@ -125,7 +142,10 @@
         </main>
 
         <footer>
-            <p>Made with <i class="fa-solid fa-heart"></i> for better money management</p>
+            <p>
+                Made with <i class="fa-solid fa-heart"></i>
+                for better money management
+            </p>
         </footer>
 
     </div>

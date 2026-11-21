@@ -9,7 +9,7 @@ const {
 } = require('../controllers/paymentController');
 
 // Display payment page
-router.get('/payment', getPaymentPage);
+router.get('/', getPaymentPage);
 
 // Create payment order
 router.post('/pay', processPayment);

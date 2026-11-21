@@ -7,14 +7,18 @@ document.getElementById("renderBtn").addEventListener("click", async () => {
 
     const button = document.getElementById("renderBtn");
 
+    console.log(button)
+
     try {
 
         button.disabled = true;
 
         // Step 1: Create order
-        const response = await fetch("http://localhost:3000/pay", {
+        const response = await fetch("http://localhost:3000/payment/pay", {
             method: "POST"
         });
+
+        console.log("response: ", response)
 
         if (!response.ok) {
             throw new Error("Unable to create payment order");
@@ -24,6 +28,8 @@ document.getElementById("renderBtn").addEventListener("click", async () => {
 
         const paymentSessionId = data.paymentSessionId;
         const orderId = data.orderId;
+
+        console.log("data: ",data)
 
         // Step 2: Configure checkout
         const checkoutOptions = {
@@ -50,8 +56,10 @@ document.getElementById("renderBtn").addEventListener("click", async () => {
 
             // Step 4: Verify payment from backend
             const statusResponse = await fetch(
-                `http://localhost:3000/payment-status/${orderId}`
+                `http://localhost:3000/payment/payment-status/${orderId}`
             );
+
+            console.log("payStatus: ",statusResponse);
 
             if (!statusResponse.ok) {
                 throw new Error("Unable to fetch payment status");
