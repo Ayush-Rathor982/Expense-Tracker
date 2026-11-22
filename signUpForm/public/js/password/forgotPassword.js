@@ -21,7 +21,7 @@ async function sendPassword(user) {
 
         console.log(result);
         if(result.status === 200){
-            alert("Password has been send to your email!");
+            alert("Password reset link has been send to your email!");
         }
         
 
