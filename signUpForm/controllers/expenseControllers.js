@@ -2,6 +2,11 @@ const { Sequelize } = require('sequelize');
 const Expenses = require('../models/Expenses')
 const Users = require('../models/Users')
 const predictCategory = require('../services/geminiService');
+const sequelize = require('../utils/db-connection');
+
+
+
+
 
 const getExpenses = async (req,res) => {
     try {
@@ -31,10 +36,14 @@ const addExpense = async (req, res) => {
     console.log("received data:", req.body, " useId: ",req.user.id);
 
     try {
+
+        const transaction = await sequelize.transaction();
+
         const expense = await Expenses.create({
             ...req.body,
             UserId: req.user.id
-        });
+        },
+        {transaction});
 
         if (!expense) {
             return res.status(400).json({
@@ -43,9 +52,10 @@ const addExpense = async (req, res) => {
             });
         }
 
-        const user = await Users.findByPk(req.user.id);
+        const user = await Users.findByPk(req.user.id,{transaction});
 
         if (!user) {
+            await transaction.rollback();
             return res.status(404).json({
                 success: false,
                 message: "User not found"
@@ -54,7 +64,9 @@ const addExpense = async (req, res) => {
 
         user.totalExpense += Number(expense.expenseAmount);
 
-        await user.save();
+        await user.save({transaction});
+
+        await transaction.commit();
 
         return res.status(201).json({
             success: true,
@@ -65,6 +77,10 @@ const addExpense = async (req, res) => {
     } catch (error) {
         console.error(error);
 
+        if (!transaction.finished) {
+            await transaction.rollback();
+        }
+
         return res.status(500).json({
             success: false,
             message: "Error while inserting expense",
@@ -73,34 +89,43 @@ const addExpense = async (req, res) => {
     }
 };
 
+
+
 const deleteExpense = async (req,res) => {
     try {
-        
-        const {id} = req.params;
 
+        const transaction = await sequelize.transaction();
         
+        const {id} = req.params; 
 
         const expense = await Expenses.findOne({
             where : {
                 id : id,
-            }
-        });
-        
-        await Expenses.destroy({
-            where : {
-                id : id,
-            }
+                UserId: req.user.id
+            },
+            transaction
         });
 
         console.log("deleted Expense: ", expense);
 
         if(!expense){
+            await transaction.rollback();
             return res.status(404).send("expense not added");
         }
+        
+        await Expenses.destroy({
+            where : {
+                id : id,
+                UserId: req.user.id
+            }, 
+            transaction
+        });
 
-        const user = await Users.findByPk(req.user.id);
+
+        const user = await Users.findByPk(req.user.id,{transaction});
 
         if (!user) {
+            await transaction.rollback();
             return res.status(404).json({
                 success: false,
                 message: "User not found"
@@ -109,12 +134,19 @@ const deleteExpense = async (req,res) => {
 
         user.totalExpense -= Number(expense.expenseAmount);
 
-        await user.save();
+        await user.save({transaction});
+
+        await transaction.commit();
 
         return res.status(200).json(expense);
 
 
     } catch (error) {
+
+        if (!transaction.finished) {
+            await transaction.rollback();
+        }
+
         res.status(500).send("Error while inserting ",error.message);
     }
 }

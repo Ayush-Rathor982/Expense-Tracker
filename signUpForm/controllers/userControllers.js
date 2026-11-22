@@ -1,8 +1,9 @@
+require('dotenv').config();
 const Users = require('../models/Users')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 
-const mySecretKey = '180ab620f1708bb009f3e820bd5c9a6006bd30307fdba42b3050b602903860cf14301e392fe6849ee99ed5ac27ebca96bc9ab6d7eb8544df6c6ea9942a6932e3';
+const mySecretKey = process.env.mySecretKey
 
 // const getExpenses = async (req,res) => {
 //     try {
@@ -36,6 +37,15 @@ const addUser = async (req,res) => {
             email,
             password : hashedPassword
         });
+
+
+        if(!user){
+            return res.status(400).json({
+                success: false,
+                message: "User not created"
+            });
+        }
+
 
         return res.status(201).json(user);
 
@@ -73,6 +83,7 @@ const checkUser = async (req,res) => {
         if(!isMatch){
             return res.status(401).send("Wrong Password");
         }
+
 
         return res.status(200).json({
             success : true,
