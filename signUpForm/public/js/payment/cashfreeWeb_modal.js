@@ -68,6 +68,8 @@ document.getElementById("renderBtn").addEventListener("click", async () => {
             const statusData = await statusResponse.json();
 
             alert("Your payment is " + statusData.orderStatus);
+
+            window.location.href = "http://localhost:3000/premium";
         }
 
     } catch (error) {
@@ -79,6 +81,7 @@ document.getElementById("renderBtn").addEventListener("click", async () => {
     } finally {
 
         button.disabled = false;
+        
     }
 
 });

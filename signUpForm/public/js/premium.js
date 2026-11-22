@@ -1,6 +1,9 @@
 
 
-document.querySelector('#showLeaderboardBtn').addEventListener('click', async () => {
+document.querySelector('#showLeaderboardBtn').addEventListener('click', updateLeaderBoard);
+
+async function updateLeaderBoard(){
+    console.log("called...")
     const leaderboardSection = document.getElementById('leaderboardSection');
 
     leaderboardSection.removeAttribute('hidden');
@@ -14,7 +17,7 @@ document.querySelector('#showLeaderboardBtn').addEventListener('click', async ()
     users.forEach((user,index) => {
         displayLeaderboard(user,index);
     });
-});
+}
 
 
 

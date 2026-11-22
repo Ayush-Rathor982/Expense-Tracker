@@ -22,25 +22,52 @@ const getExpenses = async (req,res) => {
     }
 }
 
-const addExpense = async (req,res) => {
-    console.log("received data: ",req.body)
+
+const addExpense = async (req, res) => {
+    console.log("received data:", req.body);
 
     try {
         const expense = await Expenses.create({
             ...req.body,
-            userId : req.user.id
+            userId: req.user.id
         });
 
-        if(!expense){
-            return res.status(404).send("expense not added");
+        if (!expense) {
+            return res.status(400).json({
+                success: false,
+                message: "Expense not added"
+            });
         }
 
-        return res.status(200).json(expense);
+        const user = await Users.findByPk(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        user.totalExpense += Number(expense.expenseAmount);
+
+        await user.save();
+
+        return res.status(201).json({
+            success: true,
+            message: "Expense added successfully",
+            expense
+        });
 
     } catch (error) {
-        res.status(500).send("Error while inserting ",error.message);
+        console.error(error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Error while inserting expense",
+            error: error.message
+        });
     }
-}
+};
 
 const deleteExpense = async (req,res) => {
     try {
