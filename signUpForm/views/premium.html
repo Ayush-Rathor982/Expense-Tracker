@@ -149,7 +149,7 @@
 
 
         <!-- Expense List Section -->
-        <section class="expenses-section">
+        <!-- <section class="expenses-section">
 
             <div class="section-heading expenses-heading">
 
@@ -161,11 +161,32 @@
             </div>
 
 
-            <div class="expense-list" id="expenseList">
+            <ul class="expense-list" id="expenseList">
 
-                <!-- Expenses will be added dynamically -->
+                Expenses will be added dynamically
 
+            </ul>
+
+        </section> -->
+
+
+        <!-- Expense List Section -->
+        <section class="expense-list-section expenses-section">
+
+            <div class="list-heading section-heading expenses-heading">
+                <div>
+                    <h2>Your Expenses</h2>
+                    <p>Keep track of where your money goes.</p>
+                </div>
+
+                <span class="list-icon">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </span>
             </div>
+
+            <ul id="expenseList">
+                <!-- Expenses will be added dynamically -->
+            </ul>
 
         </section>
 
@@ -243,6 +264,7 @@
 
     <!-- Your existing expense JavaScript -->
     <script src="/js/premium.js"></script>
+    <script src="/js/predictCategory.js"></script>
 
 </body>
 </html>

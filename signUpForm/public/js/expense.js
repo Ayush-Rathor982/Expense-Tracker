@@ -21,7 +21,7 @@ function handleExpenseForm(event) {
         category: form.category.value
     };
 
-    console.log(expense);
+    console.log("expense data before adding: ",expense);
 
     addData(expense);
 
@@ -99,9 +99,9 @@ async function addData(expense) {
             {headers:{'Authorization' : token}},
         );
 
-        console.log(result.data);
+        console.log("expense data After adding: ",result.data.expense);
         alert("Expense added successfully!");
-        display(result.data)
+        display(result.data.expense)
 
     } catch (error) {
         console.error("Error adding expense:", error);
@@ -134,4 +134,4 @@ async function deleteData(expenseId, li) {
 }
 
 
-module.exports = handleSubmit;
+// module.exports = handleSubmit;

@@ -1,15 +1,19 @@
 const { Sequelize } = require('sequelize');
 const Expenses = require('../models/Expenses')
 const Users = require('../models/Users')
+const predictCategory = require('../services/geminiService');
 
 const getExpenses = async (req,res) => {
     try {
         
         const expenses = await Expenses.findAll({
             where : {
-                userId : req.user.id
+                UserId : req.user.id
             }
         });
+
+        console.log("Get expense for user id ",req.user.id);
+        console.log(" expense for user id ",expenses);
 
         if(expenses.length === 0){
              return res.status(404).send("expense not found");
@@ -24,12 +28,12 @@ const getExpenses = async (req,res) => {
 
 
 const addExpense = async (req, res) => {
-    console.log("received data:", req.body);
+    console.log("received data:", req.body, " useId: ",req.user.id);
 
     try {
         const expense = await Expenses.create({
             ...req.body,
-            userId: req.user.id
+            UserId: req.user.id
         });
 
         if (!expense) {
@@ -74,16 +78,38 @@ const deleteExpense = async (req,res) => {
         
         const {id} = req.params;
 
-        const expense = await Expenses.destroy({
+        
+
+        const expense = await Expenses.findOne({
             where : {
                 id : id,
-                userId : req.user.id
             }
         });
+        
+        await Expenses.destroy({
+            where : {
+                id : id,
+            }
+        });
+
+        console.log("deleted Expense: ", expense);
 
         if(!expense){
             return res.status(404).send("expense not added");
         }
+
+        const user = await Users.findByPk(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        user.totalExpense -= Number(expense.expenseAmount);
+
+        await user.save();
 
         return res.status(200).json(expense);
 
@@ -92,6 +118,49 @@ const deleteExpense = async (req,res) => {
         res.status(500).send("Error while inserting ",error.message);
     }
 }
+
+
+
+
+const findCategory = async (req, res) => {
+
+    const allowedCategories = [
+        'Fuel',
+        'Food',
+        'Electricity',
+        'Movie',
+        'Bills',
+        'Healthcare',
+        'Education',
+        'Other'
+    ];
+
+    try {
+        const { description } = req.body;
+
+        if (!description || !description.trim()) {
+            return res.status(400).json({
+                message: 'Description is required'
+            });
+        }
+
+        const category = await predictCategory(description);
+
+        if (!allowedCategories.includes(category)) {
+            return res.status(200).json({
+                category: 'Other'
+            });
+        }
+
+        res.status(200).json({ category });
+
+    } catch (error) {
+        res.status(500).json({
+            message: 'Unable to predict category'
+        });
+    }
+}
+
 
 
 // const getTotalExpensesByUsers = async (req, res) => {
@@ -147,5 +216,6 @@ module.exports = {
     addExpense,
     getExpenses,
     deleteExpense,
+    findCategory
     // getTotalExpensesByUsers
 }
