@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
 const paymentRoutes = require('./routes/paymentRoutes');
 const premiumRoutes = require('./routes/premiumRoutes');
+const passwordRoutes = require('./routes/passwordRoutes')
 
 require('./models')
 
@@ -18,6 +19,7 @@ app.use(express.json());
 
 app.use('/users',userRoutes);
 app.use('/expenses',expenseRoutes);
+app.use('/password',passwordRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/premium',premiumRoutes)
 
