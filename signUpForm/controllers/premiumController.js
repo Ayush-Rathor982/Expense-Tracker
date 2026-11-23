@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+const { Op, fn, col, literal } = require('sequelize');
 const Expenses = require('../models/Expenses')
 const Users = require('../models/Users')
 
@@ -33,6 +34,81 @@ const getLeaderBoardData = async (req, res) => {
         });
     }
 };
+
+
+
+
+
+const getExpenseReport = async (req, res) => {
+    try {
+        const { userId, period } = req.params;
+
+        let periodExpression;
+
+        // Grouping based on date
+        if (period === 'daily') {
+            periodExpression = fn('DATE', col('createdAt'));
+        }
+        else if (period === 'weekly') {
+            // Group by year and week number
+            periodExpression = literal(
+                "YEAR(createdAt), WEEK(createdAt, 1)"
+            );
+        }
+        else if (period === 'monthly') {
+            // Group by year and month
+            periodExpression = fn(
+                'DATE_FORMAT',
+                col('createdAt'),
+                '%Y-%m'
+            );
+        }
+        else {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid period. Use daily, weekly, or monthly.'
+            });
+        }
+
+        const expenses = await Expenses.findAll({
+            attributes: [
+                [periodExpression, 'period'],
+                'category',
+                [fn('SUM', col('expenseAmount')), 'totalExpense']
+            ],
+
+            where: {
+                UserId: userId
+            },
+
+            group: [
+                literal('period'),
+                'category'
+            ],
+
+            order: [
+                [literal('period'), 'ASC'],
+                ['category', 'ASC']
+            ],
+
+            raw: true
+        });
+
+        return res.status(200).json({
+            success: true,
+            expenses
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            success: false,
+            message: 'Unable to fetch expense report'
+        });
+    }
+};
+
 
 
 // left join Operation
@@ -81,5 +157,6 @@ const getLeaderBoardData = async (req, res) => {
 
 
 module.exports = {
-    getLeaderBoardData
+    getLeaderBoardData,
+    getExpenseReport
 }
