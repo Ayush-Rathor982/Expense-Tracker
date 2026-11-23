@@ -566,6 +566,225 @@ footer i {
 }
 
 
+
+
+/* =========================
+   TRANSACTIONS
+========================= */
+
+.transactions-section {
+    background: white;
+    /* padding: 26px; */
+    border: 1px solid #eeeeF3;
+    border-radius: 14px;
+
+    flex: 1;
+    min-width: 0;
+    padding: 35px 42px;
+    margin: 30px auto;
+/* 
+    font-family: 'Inter', sans-serif; */
+    /* background: #f6f7fb; */
+    color: #202334;
+}
+
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 28px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.download-btn {
+    border: none;
+    background: #6957e8;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.download-btn:hover {
+    background: #5745d0;
+}
+
+.download-btn span {
+    margin-right: 7px;
+    font-size: 17px;
+}
+
+
+/* Filters */
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+.transaction-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tab {
+    background: transparent;
+    border: 1px solid #e8e8ef;
+    padding: 9px 15px;
+    border-radius: 7px;
+    color: #77798b;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #f0edff;
+    color: #6957e8;
+    border-color: #dcd5ff;
+    font-weight: 600;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #e8e8ef;
+    border-radius: 8px;
+    padding: 9px 12px;
+}
+
+.search-box span {
+    font-size: 20px;
+    color: #999baa;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    width: 170px;
+    font-size: 12px;
+}
+
+
+/* Table */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+thead {
+    background: #fafaff;
+}
+
+th {
+    color: #999baa;
+    font-size: 15px;
+    text-align: left;
+    padding: 15px 12px;
+    font-weight: 600;
+}
+
+td {
+    padding: 17px 12px;
+    border-bottom: 1px solid #f0f0f5;
+    color: #666879;
+    font-size: 12px;
+}
+
+.transaction-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #303245;
+    font-weight: 600;
+}
+
+.transaction-icon {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.type-badge {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.type-badge.income {
+    background: #e5f8ef;
+    color: #16a66a;
+}
+
+.type-badge.expense {
+    background: #fff0ed;
+    color: #ed6b58;
+}
+
+.amount {
+    font-weight: 700;
+}
+
+.income-amount {
+    color: #16a66a;
+}
+
+.expense-amount {
+    color: #ed6b58;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 45px 15px;
+    color: #999baa;
+}
+
+.empty-state div {
+    font-size: 35px;
+    margin-bottom: 12px;
+}
+
+.empty-state h3 {
+    color: #303245;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.empty-state p {
+    font-size: 12px;
+}
+
+.table-footer {
+    padding-top: 18px;
+    color: #999baa;
+    font-size: 11px;
+}
+
+
+
+
+
 /* =====================================
    RESPONSIVE DESIGN
 ===================================== */
@@ -662,3 +881,55 @@ footer i {
     }
 
 }
+
+
+
+
+
+
+@media (max-width: 1000px) {
+
+    .main-content {
+        padding: 28px 24px;
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+
+    .main-content {
+        padding: 22px 15px;
+    }
+
+    .section-heading,
+    .transaction-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .transactions-section {
+        padding: 18px 12px;
+    }
+
+    .filter-container {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .search-box input {
+        width: 100%;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .download-btn {
+        width: 100%;
+    }
+}
+
+

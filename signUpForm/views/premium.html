@@ -191,6 +191,150 @@
         </section>
 
 
+
+
+
+        <!-- Transactions -->
+        <section class="transactions-section">
+
+            <div class="transaction-header">
+
+                <div>
+                    <h2>Transaction History</h2>
+                    <p>View all your income and expenses in one place.</p>
+                </div>
+
+                <button class="download-btn" id="downloadBtn">
+                    <span>↓</span> Download Report
+                </button>
+
+            </div>
+
+
+            <!-- Filters -->
+            <div class="filter-container">
+
+                <div class="transaction-tabs">
+                    <button class="tab active" data-type="all">
+                        All Transactions
+                    </button>
+
+                    <button class="tab" data-type="income">
+                        Income
+                    </button>
+
+                    <button class="tab" data-type="expense">
+                        Expenses
+                    </button>
+                </div>
+
+                <div class="search-box">
+                    <span>⌕</span>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search transactions..."
+                    >
+                </div>
+
+            </div>
+
+
+            <!-- Transaction Table -->
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="transactionTable">
+
+                        <!-- Example rows: replace with backend data -->
+
+                        <tr>
+                            <td>
+                                <div class="transaction-name">
+                                    <div class="transaction-icon income-icon">↗</div>
+                                    <span>Monthly Salary</span>
+                                </div>
+                            </td>
+
+                            <td>Salary</td>
+                            <td>22 Nov 2026</td>
+                            <td><span class="type-badge income">Income</span></td>
+                            <td class="amount income-amount">+ ₹45,000</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="transaction-name">
+                                    <div class="transaction-icon expense-icon">↙</div>
+                                    <span>Grocery Shopping</span>
+                                </div>
+                            </td>
+
+                            <td>Food</td>
+                            <td>21 Nov 2026</td>
+                            <td><span class="type-badge expense">Expense</span></td>
+                            <td class="amount expense-amount">- ₹2,500</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="transaction-name">
+                                    <div class="transaction-icon expense-icon">↙</div>
+                                    <span>Petrol</span>
+                                </div>
+                            </td>
+
+                            <td>Fuel</td>
+                            <td>20 Nov 2026</td>
+                            <td><span class="type-badge expense">Expense</span></td>
+                            <td class="amount expense-amount">- ₹1,000</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="transaction-name">
+                                    <div class="transaction-icon income-icon">↗</div>
+                                    <span>Freelance Payment</span>
+                                </div>
+                            </td>
+
+                            <td>Freelance</td>
+                            <td>19 Nov 2026</td>
+                            <td><span class="type-badge income">Income</span></td>
+                            <td class="amount income-amount">+ ₹8,000</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <div class="empty-state" id="emptyState" hidden>
+                    <div>📄</div>
+                    <h3>No transactions found</h3>
+                    <p>Your transactions will appear here.</p>
+                </div>
+
+            </div>
+
+            <div class="table-footer">
+                <p>Showing your transaction history</p>
+            </div>
+
+        </section>
+
+
+
         <!-- Leaderboard Section -->
         <section class="leaderboard-card" id="leaderboardSection" hidden>
 
