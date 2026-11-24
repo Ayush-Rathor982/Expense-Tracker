@@ -1,13 +1,62 @@
+const pageLimit = document.getElementById('page-limit');
 
-document.addEventListener('DOMContentLoaded', async () => {
+// Set default value to 9 or retrieve saved value
+pageLimit.value = localStorage.getItem('page-limit') || '9';
+
+// Store selected value whenever it changes
+pageLimit.addEventListener('change', () => {
+    localStorage.setItem('page-limit', pageLimit.value);
+
+    console.log("Selected page limit:", pageLimit.value);
+
+    getExpenses();
+});
+
+
+
+document.addEventListener('DOMContentLoaded', getExpenses);
+
+
+async function getExpenses(renderPage = 0){
     const token = localStorage.getItem('token');
     const pageLimit = localStorage.getItem('page-limit') || 9;
-    const expenses = await axios.get('http://localhost:3000/expenses',{headers:{'Authorization' : token}});
+    const result = await axios.get(`http://localhost:3000/expenses?page=${renderPage}&pageLimit=${pageLimit}`,{headers:{'Authorization' : token}});
 
-    for(let i=0; i<expenses.data.length; i++){
-        display(expenses.data[i]);
+    const expenses = result.data.expenses;
+    const totalExpense = result.data.totalExpense;
+
+    console.log("page: ",renderPage," pageLimit: ",pageLimit," totalExpenses: ", totalExpense, " expenses: ",expenses);
+
+    const expense_ul = document.getElementById('expenseList');
+    expense_ul.innerHTML = '';
+
+    expenses.forEach((expense) => {
+        display(expense);
+    });
+
+    if(totalExpense > pageLimit){
+        const pageSection = document.querySelector('#paginationContainer');
+        console.log("pageSection: ",pageSection)
+        pageSection.innerHTML = ''
+
+        console.log("pageSection: ",pageSection)
+
+        const pages = Math.ceil(totalExpense / pageLimit);
+
+        for(let page = 1; page<=pages; page++){
+            const button = document.createElement('button');
+            button.id = page;
+            button.className = "page_button"
+            button.textContent = page;
+
+            button.addEventListener('click',()=>{
+                getExpenses(page);
+            });
+
+            pageSection.appendChild(button);
+        }
     }
-})
+}
 
 
 function handleExpenseForm(event) {
@@ -18,6 +67,7 @@ function handleExpenseForm(event) {
     let expense = {
         // id: editId || Date.now().toString(),
         expenseAmount: form.expenseAmount.value,
+        note: form.note.value,
         description: form.description.value,
         category: form.category.value
     };
@@ -102,7 +152,9 @@ async function addData(expense) {
 
         console.log("expense data After adding: ",result.data.expense);
         alert("Expense added successfully!");
-        display(result.data.expense)
+        // display(result.data.expense)
+        getExpenses();
+
 
     } catch (error) {
         console.error("Error adding expense:", error);
@@ -125,6 +177,7 @@ async function deleteData(expenseId, li) {
         if(res.status == 200){
             li.remove()
             alert("Expense deleted successfully!");
+            getExpenses();
         }
         
     } catch (error) {

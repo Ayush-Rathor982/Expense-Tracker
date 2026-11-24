@@ -21,8 +21,8 @@ async function executeExpensesQuery(limit,offset,userId){
 const getExpenses = async (req,res) => {
     try {       
 
-        // const userId = req.user.id
-        const userId = 1
+        const userId = req.user.id
+        // const userId = 1
 
         const page = parseInt(req.query.page) || 0;
         const limit = parseInt(req.query.pageLimit);
@@ -37,7 +37,7 @@ const getExpenses = async (req,res) => {
         ); 
 
 
-        console.log("Get expense for user id ",req.user.id);
+        // console.log("Get expense for user id ",req.user.id);
         console.log(" expense for user id ",expenses);
 
         const totalExpenses = expenses.length;

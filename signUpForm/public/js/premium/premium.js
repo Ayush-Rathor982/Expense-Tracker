@@ -12,6 +12,7 @@ async function updateLeaderBoard(){
 
     leaderboardSection.removeAttribute('hidden');
 
+
     const result = await axios.get('http://localhost:3000/premium/getExpenses');
     
     const users = result.data.users
@@ -104,25 +105,78 @@ function displayLeaderboard(user,index) {
 
 
 
+const pageLimit = document.getElementById('page-limit');
 
+// Set default value to 9 or retrieve saved value
+pageLimit.value = localStorage.getItem('page-limit') || '9';
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const token = localStorage.getItem('token');
-    const expenses = await axios.get('http://localhost:3000/expenses',{headers:{'Authorization' : token}});
+// Store selected value whenever it changes
+pageLimit.addEventListener('change', () => {
+    localStorage.setItem('page-limit', pageLimit.value);
 
-    console.log("Get Premium data: ",expenses.data)
-    console.log("Get Premium data length: ",expenses.data.length)
-    console.log("Get Premium data 0: ",expenses.data[0])
+    console.log("Selected page limit:", pageLimit.value);
 
-    for(let i=0; i<expenses.data.length; i++){
-        console.log("i: ",i);
-        console.log("Before calling function");
-
-        console.log("Function type:", typeof display);
-        displayExpense(expenses.data[i]);
-        console.log("After calling function");
-    }
+    getExpenses();
 });
+
+
+
+document.addEventListener('DOMContentLoaded', getExpenses);
+
+
+async function getExpenses(renderPage = 0){
+    const token = localStorage.getItem('token');
+    const pageLimit = localStorage.getItem('page-limit') || 9;
+    const result = await axios.get(`http://localhost:3000/expenses?page=${renderPage}&pageLimit=${pageLimit}`,{headers:{'Authorization' : token}});
+
+    // console.log("Get Premium data: ",expenses.data)
+    // console.log("Get Premium data length: ",expenses.data.length)
+    // console.log("Get Premium data 0: ",expenses.data[0])
+
+    const expenses = result.data.expenses;
+    const totalExpense = result.data.totalExpense;
+
+    console.log("page: ",renderPage," pageLimit: ",pageLimit," totalExpenses: ", totalExpense, " expenses: ",expenses);
+
+    const expense_ul = document.getElementById('expenseList');
+    expense_ul.innerHTML = '';
+
+    // for(let i=0; i<expenses.data.length; i++){
+    //     console.log("i: ",i);
+    //     console.log("Before calling function");
+
+    //     console.log("Function type:", typeof display);
+    //     displayExpense(expenses.data[i]);
+    //     console.log("After calling function");
+    // }
+
+    expenses.forEach((expense) => {
+        displayExpense(expense);
+    });
+
+    if(totalExpense > pageLimit){
+        const pageSection = document.querySelector('#paginationContainerExpenses');
+        console.log("pageSection: ",pageSection)
+        pageSection.innerHTML = ''
+
+        console.log("pageSection: ",pageSection)
+
+        const pages = Math.ceil(totalExpense / pageLimit);
+
+        for(let page = 1; page<=pages; page++){
+            const button = document.createElement('button');
+            button.id = page;
+            button.className = "page_button"
+            button.textContent = page;
+
+            button.addEventListener('click',()=>{
+                getExpenses(page);
+            });
+
+            pageSection.appendChild(button);
+        }
+    }
+}
 
 
 function displayExpense(expense) {
@@ -178,9 +232,9 @@ function handleExpenseForm(event) {
     let form = event.target;
 
     let expense = {
-        // id: editId || Date.now().toString(),
         expenseAmount: form.expenseAmount.value,
         description: form.description.value,
+        note: form.note.value,
         category: form.category.value
     };
 
@@ -188,17 +242,6 @@ function handleExpenseForm(event) {
 
     addData(expense);
 
-    updateLeaderBoard();
-
-    // let expenses = JSON.parse(localStorage.getItem("expenseList")) || [];
-
-    // if (editId) {
-    //     update(expenses, editId, expense);
-    // } else {
-    //     addData(expenses, expense);
-    // }
-
-    // localStorage.setItem("expenseList", JSON.stringify(expenses));
 }
 
 
@@ -217,7 +260,15 @@ async function addData(expense) {
 
         console.log("expense data After adding: ",result.data.expense);
         alert("Expense added successfully!");
-        displayExpense(result.data.expense)
+        // displayExpense(result.data.expense)
+        getExpenses();
+        getExpenseReport();
+
+        const leaderboardSection = document.getElementById('leaderboardSection');
+
+        if(!leaderboardSection.hasAttribute('hidden')){
+            updateLeaderBoard();
+        }
 
     } catch (error) {
         console.error("Error adding expense:", error);
@@ -240,6 +291,14 @@ async function deleteData(expenseId, li) {
         if(res.status == 200){
             li.remove()
             alert("Expense deleted successfully!");
+            getExpenses();
+            getExpenseReport();
+
+            const leaderboardSection = document.getElementById('leaderboardSection');
+
+            if(!leaderboardSection.hasAttribute('hidden')){
+                updateLeaderBoard();
+            }
         }
         
     } catch (error) {

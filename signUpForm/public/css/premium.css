@@ -490,6 +490,18 @@ button {
     margin-bottom: 25px;
 }
 
+.list-heading > :last-child{
+    display: flex;
+    gap: 40px;
+}
+
+.page-limit-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 .list-icon {
     width: 45px;
     height: 45px;
@@ -790,7 +802,8 @@ td {
 ===================================== */
 
 
-.pagination-container {
+.pagination-container, 
+.pagination-container-expenses {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -799,7 +812,8 @@ td {
     flex-wrap: wrap;
 }
 
-.pagination-container button {
+.pagination-container button, 
+.pagination-container-expenses button {
     min-width: 38px;
     height: 38px;
     padding: 0 12px;
@@ -813,7 +827,8 @@ td {
     transition: all 0.25s ease;
 }
 
-.pagination-container button:hover {
+.pagination-container button:hover,
+.pagination-container-expenses button:hover {
     background: #6c63ff;
     color: #ffffff;
     border-color: #6c63ff;
@@ -821,24 +836,28 @@ td {
     box-shadow: 0 4px 10px rgba(108, 99, 255, 0.2);
 }
 
-.pagination-container button.active {
+.pagination-container button.active,
+.pagination-container-expenses button.active {
     background: #6c63ff;
     color: #ffffff;
     border-color: #6c63ff;
     box-shadow: 0 3px 8px rgba(108, 99, 255, 0.25);
 }
 
-.pagination-container button:focus-visible {
+.pagination-container button:focus-visible,
+.pagination-container-expenses button:focus-visible {
     outline: 3px solid rgba(108, 99, 255, 0.3);
     outline-offset: 3px;
 }
 
 @media (max-width: 480px) {
-    .pagination-container {
+    .pagination-container,
+    .pagination-container-expenses {
         gap: 6px;
     }
 
-    .pagination-container button {
+    .pagination-container button,
+    .pagination-container-expenses button {
         min-width: 34px;
         height: 34px;
         font-size: 12px;

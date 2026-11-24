@@ -100,7 +100,8 @@ async function getExpenses(period,limit,offset,userId){
 
 const getExpenseReport = async (req, res) => {
     try {
-        const { userId, period } = req.params;
+        const { period } = req.params;
+        const userId = req.user.id;
 
         const page = parseInt(req.query.page) || 0;
 

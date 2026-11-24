@@ -38,15 +38,18 @@ tabs.forEach(tab => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    getExpenseReport('daily');
+    getExpenseReport();
 })
 
 
 
-async function getExpenseReport(period, page = 0) {
+async function getExpenseReport(period = 'daily', renderPage = 0) {
     try {
+        const token = localStorage.getItem('token');
+
         const result = await axios.get(
-            `http://localhost:3000/premium/getExpenseReport/1/${period}?page=${page}`
+            `http://localhost:3000/premium/getExpenseReport/${period}?page=${renderPage}`,
+            {headers:{'Authorization' : token}}
         );
 
         console.log(result.data);
@@ -59,12 +62,13 @@ async function getExpenseReport(period, page = 0) {
         table.innerHTML = '';
 
         expenses.forEach((expense,index) => {
-            displayReport(expense,index+1,page,period);
+            displayReport(expense, index+1, renderPage==0 ? 1:renderPage, period);
         });
 
 
         if(totalExpense>10){
             const pageSection = document.querySelector('#paginationContainer');
+            pageSection.innerHTML = ""
 
             const pages = Math.ceil(totalExpense / 10);
 
@@ -97,7 +101,7 @@ function displayReport(expense,index,page,period) {
     const tr = document.createElement('tr');
     
     const SNo = document.createElement('td');
-    SNo.textContent = Number(page*10 + index);
+    SNo.textContent = Number((page-1)*10 + index);
 
     // Create category cell
     const categoryTd = document.createElement('td');
