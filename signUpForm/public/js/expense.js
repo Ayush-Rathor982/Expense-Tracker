@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
+    const pageLimit = localStorage.getItem('page-limit') || 9;
     const expenses = await axios.get('http://localhost:3000/expenses',{headers:{'Authorization' : token}});
 
     for(let i=0; i<expenses.data.length; i++){

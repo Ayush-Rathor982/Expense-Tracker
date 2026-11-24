@@ -204,7 +204,7 @@
                     <p>View expenses in one place.</p>
                 </div>
 
-                <button class="download-btn" id="downloadBtn">
+                <button class="download-btn" id="downloadBtn" onclick="downloadPDF()">
                     <span>↓</span> Download Report
                 </button>
 
@@ -243,14 +243,13 @@
             <!-- Transaction Table -->
             <div class="table-container">
 
-                <table>
+                <table id="transaction-table">
 
                     <thead>
                         <tr>
-                            <!-- <th>Description</th> -->
+                            <th>S. No.</th>
                             <th>Category</th>
-                            <th>Date</th>
-                            <!-- <th>Type</th> -->
+                            <th id="periodHeading">Date</th>
                             <th>Amount</th>
                         </tr>
                     </thead>
@@ -258,62 +257,6 @@
                     <tbody id="transactionTable">
 
                         <!-- Example rows: replace with backend data -->
-
-                        <tr>
-                            <!-- <td>
-                                <div class="transaction-name">
-                                    <div class="transaction-icon income-icon">↗</div>
-                                    <span>Monthly Salary</span>
-                                </div>
-                            </td> -->
-
-                            <td>Salary</td>
-                            <td>22 Nov 2026</td>
-                            <!-- <td><span class="type-badge income">Income</span></td> -->
-                            <td class="amount income-amount">+ ₹45,000</td>
-                        </tr>
-
-                        <tr>
-                            <!-- <td>
-                                <div class="transaction-name">
-                                    <div class="transaction-icon expense-icon">↙</div>
-                                    <span>Grocery Shopping</span>
-                                </div>
-                            </td> -->
-
-                            <td>Food</td>
-                            <td>21 Nov 2026</td>
-                            <!-- <td><span class="type-badge expense">Expense</span></td> -->
-                            <td class="amount expense-amount">- ₹2,500</td>
-                        </tr>
-
-                        <tr>
-                            <!-- <td>
-                                <div class="transaction-name">
-                                    <div class="transaction-icon expense-icon">↙</div>
-                                    <span>Petrol</span>
-                                </div>
-                            </td> -->
-
-                            <td>Fuel</td>
-                            <td>20 Nov 2026</td>
-                            <!-- <td><span class="type-badge expense">Expense</span></td> -->
-                            <td class="amount expense-amount">- ₹1,000</td>
-                        </tr>
-
-                        <tr>
-                            <!-- <td>
-                                <div class="transaction-name">
-                                    <div class="transaction-icon income-icon">↗</div>
-                                    <span>Freelance Payment</span>
-                                </div>
-                            </td> -->
-
-                            <td>Freelance</td>
-                            <td>19 Nov 2026</td>
-                            <!-- <td><span class="type-badge income">Income</span></td> -->
-                            <td class="amount income-amount">+ ₹8,000</td>
-                        </tr>
 
                     </tbody>
 
@@ -329,6 +272,14 @@
 
             <div class="table-footer">
                 <p>Showing your transaction history</p>
+
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container" id="paginationContainer">
+
+                <!-- Add pages button here -->
+
             </div>
 
         </section>
@@ -407,8 +358,20 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- Your existing expense JavaScript -->
-    <script src="/js/premium.js"></script>
+    <script src="/js/premium/premium.js"></script>
     <script src="/js/predictCategory.js"></script>
+    <script src="/js/premium/reportGenerate.js"></script>
+    <!-- <script src="/js/expense.js"></script> -->
+    
+    <!-- Download pdf report for transactions (JavaScript) -->
+    <!-- Load jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Load AutoTable -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Your JavaScript file -->
+    <script src="./js/premium/generatePDF.js"></script>
 
 </body>
 </html>

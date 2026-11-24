@@ -38,10 +38,7 @@ const getLeaderBoardData = async (req, res) => {
 
 
 
-
-const getExpenseReport = async (req, res) => {
-    try {
-        const { userId, period } = req.params;
+async function getExpenses(period,limit,offset,userId){
 
         let periodExpression;
 
@@ -50,9 +47,10 @@ const getExpenseReport = async (req, res) => {
             periodExpression = fn('DATE', col('createdAt'));
         }
         else if (period === 'weekly') {
-            // Group by year and week number
-            periodExpression = literal(
-                "YEAR(createdAt), WEEK(createdAt, 1)"
+            periodExpression = fn(
+                'YEARWEEK',
+                col('createdAt'),
+                1
             );
         }
         else if (period === 'monthly') {
@@ -82,21 +80,51 @@ const getExpenseReport = async (req, res) => {
             },
 
             group: [
-                literal('period'),
+                periodExpression,
                 'category'
             ],
 
             order: [
-                [literal('period'), 'ASC'],
-                ['category', 'ASC']
+                [periodExpression, 'DESC'],
+                ['totalExpense', 'DESC']
             ],
 
+            limit,
+            offset,
             raw: true
         });
 
+    return expenses;
+}
+
+
+const getExpenseReport = async (req, res) => {
+    try {
+        const { userId, period } = req.params;
+
+        const page = parseInt(req.query.page) || 0;
+
+        const limit = 10;
+        const offset = page === 0 ? 0 : (page - 1) * limit;
+
+        let expenses = await getExpenses(
+            period,
+            page === 0 ? Number.MAX_SAFE_INTEGER : limit,
+            offset,
+            userId
+        );     
+        
+        
+        const totalExpenses = expenses.length
+
+        if(totalExpenses > 10){
+            expenses = expenses.slice(0, 10);
+        }
+
         return res.status(200).json({
             success: true,
-            expenses
+            expenses,
+            totalExpense : totalExpenses
         });
 
     } catch (error) {

@@ -6,25 +6,55 @@ const sequelize = require('../utils/db-connection');
 
 
 
+async function executeExpensesQuery(limit,offset,userId){
+    const expenses = await Expenses.findAll({
+        where : {
+            UserId : userId
+        },
+        limit,
+        offset,
+    });
 
+    return expenses;
+}
 
 const getExpenses = async (req,res) => {
-    try {
-        
-        const expenses = await Expenses.findAll({
-            where : {
-                UserId : req.user.id
-            }
-        });
+    try {       
+
+        // const userId = req.user.id
+        const userId = 1
+
+        const page = parseInt(req.query.page) || 0;
+        const limit = parseInt(req.query.pageLimit);
+        const offset = page === 0 ? 0 : (page - 1) * limit;
+
+        console.log("userId: ",userId, " page: ",page," linmit: ",limit," offset: ",offset);
+
+        let expenses = await executeExpensesQuery(
+            page === 0 ? Number.MAX_SAFE_INTEGER : limit,
+            offset,
+            userId
+        ); 
+
 
         console.log("Get expense for user id ",req.user.id);
         console.log(" expense for user id ",expenses);
+
+        const totalExpenses = expenses.length;
+        if(totalExpenses > limit){
+            expenses = expenses.slice(0, limit);
+        }
 
         if(expenses.length === 0){
              return res.status(404).send("expense not found");
         }
 
-        return res.status(200).json(expenses);
+        // return res.status(200).json(expenses);
+        return res.status(200).json({
+            success: true,
+            expenses,
+            totalExpense : totalExpenses
+        });
 
     } catch (error) {
         res.status(500).send("Error while fetching ",error.message);

@@ -111,11 +111,65 @@ document.addEventListener('DOMContentLoaded', async () => {
     const expenses = await axios.get('http://localhost:3000/expenses',{headers:{'Authorization' : token}});
 
     console.log("Get Premium data: ",expenses.data)
+    console.log("Get Premium data length: ",expenses.data.length)
+    console.log("Get Premium data 0: ",expenses.data[0])
 
     for(let i=0; i<expenses.data.length; i++){
-        display(expenses.data[i]);
+        console.log("i: ",i);
+        console.log("Before calling function");
+
+        console.log("Function type:", typeof display);
+        displayExpense(expenses.data[i]);
+        console.log("After calling function");
     }
-})
+});
+
+
+function displayExpense(expense) {
+
+    console.log("Inside displayExpense:", expense);
+
+    const ul = document.querySelector('#expenseList');
+
+    console.log("premium display: ",ul);
+
+    const newLi = document.createElement('li');
+    newLi.className = 'expense-card';
+    newLi.id = expense.id;
+
+    const details = document.createElement('div');
+    details.className = 'expense-details';
+
+    const amount = document.createElement('h3');
+    amount.textContent = `₹${expense.expenseAmount}`;
+
+    const description = document.createElement('p');
+    description.textContent = expense.description;
+
+    const category = document.createElement('span');
+    category.className = 'expense-category';
+    category.textContent = expense.category;
+
+    details.append(amount, description, category);
+
+    const actions = document.createElement('div');
+    actions.className = 'expense-actions';
+
+    const delBtn = document.createElement('button');
+    delBtn.textContent = 'Delete';
+    delBtn.className = 'delete-btn';
+
+    delBtn.addEventListener('click', () => {
+        deleteData(expense.id, newLi);
+    });
+
+    actions.append(delBtn);
+    newLi.append(details, actions);
+
+    console.log("premium newLi: ",newLi);
+
+    ul.appendChild(newLi);
+}
 
 
 function handleExpenseForm(event) {
@@ -150,55 +204,6 @@ function handleExpenseForm(event) {
 
 
 
-function display(expense) {
-    const ul = document.querySelector('#expenseList');
-
-    const newLi = document.createElement('li');
-    newLi.className = 'expense-card';
-    newLi.id = expense.id;
-
-    const details = document.createElement('div');
-    details.className = 'expense-details';
-
-    const amount = document.createElement('h3');
-    amount.textContent = `₹${expense.expenseAmount}`;
-
-    const description = document.createElement('p');
-    description.textContent = expense.description;
-
-    const category = document.createElement('span');
-    category.className = 'expense-category';
-    category.textContent = expense.category;
-
-    details.append(amount, description, category);
-
-    const actions = document.createElement('div');
-    actions.className = 'expense-actions';
-
-    const delBtn = document.createElement('button');
-    delBtn.textContent = 'Delete';
-    delBtn.className = 'delete-btn';
-
-    delBtn.addEventListener('click', () => {
-        deleteData(expense.id, newLi);
-    });
-
-    // const editBtn = document.createElement('button');
-    // editBtn.textContent = 'Edit';
-    // editBtn.className = 'edit-btn';
-
-    // editBtn.addEventListener('click', () => {
-    //     editData(expense);
-    // });
-
-    // actions.append(editBtn);
-
-    actions.append(delBtn);
-    newLi.append(details, actions);
-
-    ul.appendChild(newLi);
-}
-
 
 async function addData(expense) {
     try {
@@ -212,7 +217,7 @@ async function addData(expense) {
 
         console.log("expense data After adding: ",result.data.expense);
         alert("Expense added successfully!");
-        display(result.data.expense)
+        displayExpense(result.data.expense)
 
     } catch (error) {
         console.error("Error adding expense:", error);

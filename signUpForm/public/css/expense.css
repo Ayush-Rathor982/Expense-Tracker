@@ -155,6 +155,18 @@ main {
     font-size: 14px;
 }
 
+.list-heading > :last-child{
+    display: flex;
+    gap: 40px;
+}
+
+.page-limit-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 .heading-icon {
     font-size: 25px;
     color: #6258ed;

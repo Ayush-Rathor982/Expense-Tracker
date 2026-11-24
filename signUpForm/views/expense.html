@@ -127,10 +127,29 @@
                         <h2>Your Expenses</h2>
                         <p>Keep track of where your money goes.</p>
                     </div>
+                    
+                    <div>
+                        <div class="page-limit-group ">
+                            <label for="page-limit">
+                                <i class="fa-solid fa-list"></i>
+                                Expense Showing
+                            </label>
 
-                    <span class="list-icon">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                    </span>
+                            <select id="page-limit" name="page-limit" >
+                                <option value="3">3</option>
+                                <option value="6">6</option>
+                                <option value="9">9</option>
+                                <option value="12">12</option>
+                                <option value="15">15</option>
+                                <option value="18">18</option>
+                                <option value="21">21</option>
+                            </select>
+                        </div>
+
+                        <span class="list-icon">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </span>
+                    </div>
                 </div>
 
                 <ul id="expenseList">
