@@ -13,7 +13,6 @@ tabs.forEach(tab => {
 
         // Get selected period
         const period = tab.dataset.type;
-        console.log(period);
 
         const periodHeading = document.getElementById('periodHeading');
 
@@ -52,8 +51,6 @@ async function getExpenseReport(period = 'daily', renderPage = 0) {
             {headers:{'Authorization' : token}}
         );
 
-        console.log(result.data);
-
         const expenses = result.data.expenses;
         const totalExpense = result.data.totalExpense;
 
@@ -88,7 +85,8 @@ async function getExpenseReport(period = 'daily', renderPage = 0) {
 
 
     } catch (error) {
-        console.error('Error fetching expense report:', error);
+        // console.error('Error fetching expense report:', error);
+        alert('Error fetching expense report:', error)
     }
 }
 

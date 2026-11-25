@@ -7,7 +7,7 @@ pageLimit.value = localStorage.getItem('page-limit') || '9';
 pageLimit.addEventListener('change', () => {
     localStorage.setItem('page-limit', pageLimit.value);
 
-    console.log("Selected page limit:", pageLimit.value);
+    // console.log("Selected page limit:", pageLimit.value);
 
     getExpenses();
 });
@@ -25,8 +25,6 @@ async function getExpenses(renderPage = 0){
     const expenses = result.data.expenses;
     const totalExpense = result.data.totalExpense;
 
-    console.log("page: ",renderPage," pageLimit: ",pageLimit," totalExpenses: ", totalExpense, " expenses: ",expenses);
-
     const expense_ul = document.getElementById('expenseList');
     expense_ul.innerHTML = '';
 
@@ -36,10 +34,7 @@ async function getExpenses(renderPage = 0){
 
     if(totalExpense > pageLimit){
         const pageSection = document.querySelector('#paginationContainer');
-        console.log("pageSection: ",pageSection)
         pageSection.innerHTML = ''
-
-        console.log("pageSection: ",pageSection)
 
         const pages = Math.ceil(totalExpense / pageLimit);
 
@@ -65,26 +60,14 @@ function handleExpenseForm(event) {
     let form = event.target;
 
     let expense = {
-        // id: editId || Date.now().toString(),
         expenseAmount: form.expenseAmount.value,
         note: form.note.value,
         description: form.description.value,
         category: form.category.value
     };
 
-    console.log("expense data before adding: ",expense);
-
     addData(expense);
 
-    // let expenses = JSON.parse(localStorage.getItem("expenseList")) || [];
-
-    // if (editId) {
-    //     update(expenses, editId, expense);
-    // } else {
-    //     addData(expenses, expense);
-    // }
-
-    // localStorage.setItem("expenseList", JSON.stringify(expenses));
 }
 
 
@@ -123,15 +106,6 @@ function display(expense) {
         deleteData(expense.id, newLi);
     });
 
-    // const editBtn = document.createElement('button');
-    // editBtn.textContent = 'Edit';
-    // editBtn.className = 'edit-btn';
-
-    // editBtn.addEventListener('click', () => {
-    //     editData(expense);
-    // });
-
-    // actions.append(editBtn);
 
     actions.append(delBtn);
     newLi.append(details, actions);
@@ -150,14 +124,13 @@ async function addData(expense) {
             {headers:{'Authorization' : token}},
         );
 
-        console.log("expense data After adding: ",result.data.expense);
         alert("Expense added successfully!");
-        // display(result.data.expense)
+        
         getExpenses();
 
 
     } catch (error) {
-        console.error("Error adding expense:", error);
+        // console.error("Error adding expense:", error);
         alert(error.response?.data?.message || "Failed to add expense");
     }
 }
@@ -181,11 +154,9 @@ async function deleteData(expenseId, li) {
         }
         
     } catch (error) {
-        console.error("Error deleting expense:", error);
+        // console.error("Error deleting expense:", error);
         alert(error.response?.data?.message || "Failed to delete expense");
     }
 
 }
 
-
-// module.exports = handleSubmit;

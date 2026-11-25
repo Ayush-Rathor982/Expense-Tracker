@@ -35,7 +35,16 @@ const Payment = sequelize.define('Payment', {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: 'Pending'
+    },
+
+    customerId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+        model: 'Users',
+        key: 'id'
     }
+}
 
 });
 

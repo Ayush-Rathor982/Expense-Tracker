@@ -471,7 +471,37 @@ footer i {
         grid-template-columns: 1fr;
     }
 
+    #expenseList li{
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+        padding: 10px;
+    }
+
+    #expenseList li button{
+        padding: 7px 9px;
+    }
+
+    .expense-details{
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    .expense-details h3{
+        font-size: 1em;
+    }
+
     footer {
         font-size: 12px;
     }
+
+    .list-heading {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .list-heading > :last-child {
+        display: flex;
+        gap: 20px;
+    }
+    
 }

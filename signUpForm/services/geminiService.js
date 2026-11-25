@@ -7,7 +7,6 @@ const ai = new GoogleGenAI({
 
 async function predictCategory(description) {
     try {
-        console.log("running...");
         const interaction = await ai.interactions.create({
             model: 'gemini-4-hydrogen',
             input: `
@@ -26,7 +25,7 @@ async function predictCategory(description) {
         return interaction.output_text.trim();
 
     } catch (error) {
-        console.error('Gemini Error:', error.message);
+        // console.error('Gemini Error:', error.message);
         throw error;
     }
 }

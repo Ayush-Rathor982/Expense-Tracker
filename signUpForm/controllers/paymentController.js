@@ -1,4 +1,4 @@
-
+const Users = require('../models/Users')
 const path = require('path');
 
 const Payment = require('../models/Payment');
@@ -25,7 +25,7 @@ exports.processPayment = async (req, res) => {
     const orderAmount = 2000;
     const orderCurrency = "INR";
 
-    const customerID = "1";
+    const customerID = String(req.user.id);
     const customerPhone = "7976821870";
 
     try {
@@ -38,15 +38,14 @@ exports.processPayment = async (req, res) => {
             customerPhone
         );
 
-        console.log("Payment session: ", paymentSessionId);
-
-        // await Payment.create({
-        //     orderId,
-        //     paymentSessionId,
-        //     orderAmount,
-        //     orderCurrency,
-        //     paymentStatus: "Pending"
-        // });
+        await Payment.create({
+            orderId,
+            orderAmount,
+            orderCurrency,
+            paymentSessionId,
+            paymentStatus : "Pending",
+            customerId : req.user.id,
+        });
 
         return res.status(201).json({
             paymentSessionId,
@@ -55,7 +54,7 @@ exports.processPayment = async (req, res) => {
 
     } catch (error) {
 
-        console.error("Error processing payment:", error);
+        // console.error("Error processing payment:", error);
 
         return res.status(500).json({
             message: "Error processing payment"
@@ -71,34 +70,52 @@ exports.checkPaymentStatus = async (req, res) => {
 
         const { orderId } = req.params;
 
-        // const payment = await Payment.findOne({
-        //     where: { orderId }
-        // });
+        const userId = req.user.id
 
-        // if (!payment) {
-        //     return res.status(404).json({
-        //         message: "Payment record not found"
-        //     });
-        // }
-
-        console.log("order id: ", orderId);
+        const payment = await Payment.findOne({
+            where:{
+                orderId : orderId
+            }
+        })
 
         const orderStatus = await getPaymentStatus(orderId);
 
-        console.log("order status: ",orderStatus)
+        payment.paymentStatus = orderStatus;
+        await payment.save();
 
-        // await payment.update({
-        //     paymentStatus: orderStatus
-        // });
+        
+        // Upgrade only when payment is successful
+        if (orderStatus === 'Success') {
+            const user = await Users.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: "User not found"
+                });
+            }
+
+            user.isPremium = true;
+            await user.save();
+
+            return res.status(200).json({
+                success: true,
+                message: "Payment successful. Premium activated!",
+                orderId,
+                orderStatus
+            });
+        }
 
         return res.status(200).json({
+            success: false,
+            message: "Payment not completed yet",
             orderId,
             orderStatus
         });
 
     } catch (error) {
 
-        console.error("Error checking payment status:", error);
+        // console.error("Error checking payment status:", error);
 
         return res.status(500).json({
             message: "Unable to check payment status"

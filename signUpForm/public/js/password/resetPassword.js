@@ -17,8 +17,6 @@ form.addEventListener('submit', async (e) => {
     // Extract UUID from current URL
     const id = window.location.pathname.split('/').pop();
 
-    console.log("reset id: ",id)
-
     try {
         const response = await fetch(
             `/password/updatepassword/${id}`,
@@ -39,6 +37,7 @@ form.addEventListener('submit', async (e) => {
             result.message;
 
     } catch (error) {
-        console.error(error);
+        // console.error(error);
+        alert("Error : ",error)
     }
 });

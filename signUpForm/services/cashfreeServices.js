@@ -38,10 +38,10 @@ exports.createOrder = async (
         return response.data.payment_session_id;
 
     } catch (error) {
-        console.error(
-            "Error creating Cashfree order:",
-            error.response?.data || error.message
-        );
+        // console.error(
+        //     "Error creating Cashfree order:",
+        //     error.response?.data || error.message
+        // );
 
         throw error;
     }
@@ -69,10 +69,10 @@ exports.getPaymentStatus = async (orderId) => {
         return orderStatus;
 
     } catch (error) {
-        console.error(
-            "Error fetching payment status:",
-            error.response?.data || error.message
-        );
+        // console.error(
+        //     "Error fetching payment status:",
+        //     error.response?.data || error.message
+        // );
 
         throw error;
     }

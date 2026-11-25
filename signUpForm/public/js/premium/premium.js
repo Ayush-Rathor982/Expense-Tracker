@@ -3,7 +3,6 @@
 document.querySelector('#showLeaderboardBtn').addEventListener('click', updateLeaderBoard);
 
 async function updateLeaderBoard(){
-    console.log("called...")
 
     const leaderboardSection = document.getElementById('leaderboardSection');
 
@@ -16,8 +15,6 @@ async function updateLeaderBoard(){
     const result = await axios.get('http://localhost:3000/premium/getExpenses');
     
     const users = result.data.users
-
-    console.log(users);
 
     users.forEach((user,index) => {
         displayLeaderboard(user,index);
@@ -92,8 +89,6 @@ function displayLeaderboard(user,index) {
     row.appendChild(userTd);
     row.appendChild(expenseTd);
 
-    console.log(row);
-
     // Append row to table body
     leaderboardBody.appendChild(row);
 
@@ -114,7 +109,7 @@ pageLimit.value = localStorage.getItem('page-limit') || '9';
 pageLimit.addEventListener('change', () => {
     localStorage.setItem('page-limit', pageLimit.value);
 
-    console.log("Selected page limit:", pageLimit.value);
+    // console.log("Selected page limit:", pageLimit.value);
 
     getExpenses();
 });
@@ -129,26 +124,12 @@ async function getExpenses(renderPage = 0){
     const pageLimit = localStorage.getItem('page-limit') || 9;
     const result = await axios.get(`http://localhost:3000/expenses?page=${renderPage}&pageLimit=${pageLimit}`,{headers:{'Authorization' : token}});
 
-    // console.log("Get Premium data: ",expenses.data)
-    // console.log("Get Premium data length: ",expenses.data.length)
-    // console.log("Get Premium data 0: ",expenses.data[0])
-
     const expenses = result.data.expenses;
     const totalExpense = result.data.totalExpense;
-
-    console.log("page: ",renderPage," pageLimit: ",pageLimit," totalExpenses: ", totalExpense, " expenses: ",expenses);
 
     const expense_ul = document.getElementById('expenseList');
     expense_ul.innerHTML = '';
 
-    // for(let i=0; i<expenses.data.length; i++){
-    //     console.log("i: ",i);
-    //     console.log("Before calling function");
-
-    //     console.log("Function type:", typeof display);
-    //     displayExpense(expenses.data[i]);
-    //     console.log("After calling function");
-    // }
 
     expenses.forEach((expense) => {
         displayExpense(expense);
@@ -156,10 +137,7 @@ async function getExpenses(renderPage = 0){
 
     if(totalExpense > pageLimit){
         const pageSection = document.querySelector('#paginationContainerExpenses');
-        console.log("pageSection: ",pageSection)
         pageSection.innerHTML = ''
-
-        console.log("pageSection: ",pageSection)
 
         const pages = Math.ceil(totalExpense / pageLimit);
 
@@ -181,11 +159,7 @@ async function getExpenses(renderPage = 0){
 
 function displayExpense(expense) {
 
-    console.log("Inside displayExpense:", expense);
-
     const ul = document.querySelector('#expenseList');
-
-    console.log("premium display: ",ul);
 
     const newLi = document.createElement('li');
     newLi.className = 'expense-card';
@@ -220,8 +194,6 @@ function displayExpense(expense) {
     actions.append(delBtn);
     newLi.append(details, actions);
 
-    console.log("premium newLi: ",newLi);
-
     ul.appendChild(newLi);
 }
 
@@ -237,8 +209,6 @@ function handleExpenseForm(event) {
         note: form.note.value,
         category: form.category.value
     };
-
-    console.log("expense data before adding: ",expense);
 
     addData(expense);
 
@@ -258,9 +228,8 @@ async function addData(expense) {
             {headers:{'Authorization' : token}},
         );
 
-        console.log("expense data After adding: ",result.data.expense);
         alert("Expense added successfully!");
-        // displayExpense(result.data.expense)
+
         getExpenses();
         getExpenseReport();
 
@@ -271,7 +240,7 @@ async function addData(expense) {
         }
 
     } catch (error) {
-        console.error("Error adding expense:", error);
+        // console.error("Error adding expense:", error);
         alert(error.response?.data?.message || "Failed to add expense");
     }
 }
@@ -302,7 +271,7 @@ async function deleteData(expenseId, li) {
         }
         
     } catch (error) {
-        console.error("Error deleting expense:", error);
+        // console.error("Error deleting expense:", error);
         alert(error.response?.data?.message || "Failed to delete expense");
     }
 

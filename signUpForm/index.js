@@ -1,6 +1,10 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs')
 const db = require('./utils/db-connection')
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan')
+
 
 const userRoutes = require('./routes/userRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
@@ -8,13 +12,27 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const premiumRoutes = require('./routes/premiumRoutes');
 const passwordRoutes = require('./routes/passwordRoutes')
 
+const errorHandler = require('./middleware/errorHandler');
+
+require('dotenv').config();
 require('./models')
+
+
 
 const app = express();
 
-app.use(express.static('public'))
 
+const accessLogStream = fs.createWriteStream(
+    path.join(__dirname,'access.log'),
+    {flags: 'a'}
+);
+
+app.use(morgan('combined',{stream:accessLogStream}));
+
+app.use(express.static('public'))
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 
 app.use('/users',userRoutes);
@@ -23,12 +41,11 @@ app.use('/password',passwordRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/premium',premiumRoutes)
 
+app.use(errorHandler);
 
 
 
-// app.get('/index', (req, res) => {
-//     res.sendFile(path.join(__dirname,"views","index.html"));
-// });
+
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname,"views","signup.html"));
@@ -47,15 +64,12 @@ app.get('/expense', (req, res) => {
 });
 
 
-app.get('/premium', (req, res) => {
-    res.sendFile(path.join(__dirname,"views","premium.html"));
-});
 
 
-
+const port = process.env.PORT || 3000
 
 db.sync({force:true}).then(()=>{
-    app.listen(3000, () => {
+    app.listen(port, () => {
           console.log('Server is running on port 3000');
      })
 }).catch(err => {

@@ -19,7 +19,6 @@ descriptionInput.addEventListener('input', () => {
 
         try {
 
-            console.log("description: ", description);
             const response = await fetch(
                 'http://localhost:3000/expenses/predict-category',
                 {
@@ -33,14 +32,13 @@ descriptionInput.addEventListener('input', () => {
 
             const data = await response.json();
 
-            console.log("gemini data: ", data);
-
             if (response.ok) {
                 categorySelect.value = data.category;
             }
 
         } catch (error) {
-            console.error('Category prediction failed:', error);
+            // console.error('Category prediction failed:', error);
+            alert('Category prediction failed:', error)
         }
 
     }, 800);

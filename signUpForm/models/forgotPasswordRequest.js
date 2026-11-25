@@ -14,15 +14,6 @@ const ForgotPasswordRequests = sequelize.define('ForgotPasswordRequests', {
         defaultValue: true,
         allowNull: false
     },
-
-    // userId: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //     references: {
-    //         model: 'users',
-    //         key: 'id'
-    //     }
-    // }
     
 });
 

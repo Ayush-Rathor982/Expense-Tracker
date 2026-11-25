@@ -4,12 +4,9 @@ function handleLoginForm(event) {
     let form = event.target;
 
     let user = {
-        // name: form.name.value,
         email: form.email.value,
         password: form.password.value
     };
-
-    console.log(user);
 
     isValidUser(user)
 }
@@ -21,19 +18,22 @@ async function isValidUser(user) {
             user
         );
 
-        console.log(result.data);
         alert("user loged in successfully!");
-
-        const token = result.data.token;
-        localStorage.setItem('token', token);
-
-        console.log("token: ",token)
         
-        window.location.href = 'http://localhost:3000/expense';
-        // display(result.data)
+        const isPremium = result.data.isPremium
+        const token = result.data.token;
+        
+        localStorage.setItem('token', token);
+        
+        if(isPremium){
+            window.location.href = 'http://localhost:3000/premium';
+        }
+        else{
+            window.location.href = 'http://localhost:3000/expense';
+        }
 
     } catch (error) {
-        console.error("Error while Login:", error);
+        // console.error("Error while Login:", error);
 
         const status = error.response?.status;
 

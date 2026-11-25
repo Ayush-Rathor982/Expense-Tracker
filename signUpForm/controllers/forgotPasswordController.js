@@ -6,6 +6,22 @@ const Sib = require('sib-api-v3-sdk');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const sequelize = require('../utils/db-connection');
+const nodemailer = require('nodemailer');
+
+
+
+
+
+
+const transporter = nodemailer.createTransport({
+    host: process.env.BREVO_SMTP_HOST,
+    port: Number(process.env.BREVO_SMTP_PORT),
+    secure: false,
+    auth: {
+        user: process.env.BREVO_SMTP_USER,
+        pass: process.env.BREVO_SMTP_KEY
+    }
+});
 
 
 
@@ -45,7 +61,7 @@ const forgotPassword = async (req, res) => {
             await sendResetEmail(email, resetUrl);
         } catch (emailError) {
             console.error('Email sending failed:', emailError.message);
-            console.log(resetUrl);
+            // console.log(resetUrl);
         }
 
         return res.status(200).json({
@@ -55,7 +71,6 @@ const forgotPassword = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
 
         return res.status(500).json({
             success: false,
@@ -65,28 +80,23 @@ const forgotPassword = async (req, res) => {
 };
 
 
-async function sendResetEmail(email, resetUrl) {
-    const client = Sib.ApiClient.instance;
-
-    client.authentications['api-key'].apiKey =
-        process.env.BREVO_API_KEY;
-
-    const tranEmailApi = new Sib.TransactionalEmailsApi();
-
-    return await tranEmailApi.sendTransacEmail({
-        sender: {
-            email: 'arathor3516@gmail.com',
-            name: 'Expense Tracker'
+async function sendResetEmail(userEmail, resetUrl) {
+    const info = await transporter.sendMail({
+        from: {
+            name: 'Expense Tracker',
+            address: 'arathor3516@gmail.com'
         },
-
-        to: [{ email : 'arathor3516@gmail.com' }],
-
+        to: 'arathor3516@gmail.com',
         subject: 'Reset Your Password',
-
-        textContent: `Click this link to reset your password: ${resetUrl}`
+        html: `
+            <h2>Reset Your Password</h2>
+            <p>Click below to reset your password:</p>
+            <a href="${resetUrl}">${resetUrl}</a>
+        `
     });
-}
 
+    return info;
+}
 
 
 
@@ -94,16 +104,12 @@ const getResetPasswordPage = async (req, res) => {
     try {
         const { id } = req.params;
 
-        console.log("id: ",id);
-
         const request = await ForgotPasswordRequests.findOne({
             where: {
                 id: id,
                 isActive: true
             }
         });
-
-        console.log("request......: ", request)
 
         if (!request) {
             return res.status(400).send(
@@ -116,7 +122,6 @@ const getResetPasswordPage = async (req, res) => {
         );
 
     } catch (error) {
-        console.error(error);
 
         return res.status(500).send(
             'Error while opening reset password page'
@@ -134,13 +139,6 @@ const updatePassword = async (req, res) => {
     try {
         const { id } = req.params;
         const { password } = req.body;
-
-        // if (!password || password.length < 8) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: 'Password must contain at least 8 characters'
-        //     });
-        // }
 
         transaction = await sequelize.transaction();
 
@@ -200,8 +198,6 @@ const updatePassword = async (req, res) => {
         if (transaction && !transaction.finished) {
             await transaction.rollback();
         }
-
-        console.error(error);
 
         return res.status(500).json({
             success: false,

@@ -7,8 +7,6 @@ function handlePasswordForm(event) {
         email: form.email.value,
     };
 
-    console.log(user);
-
     sendPassword(user)
 }
 
@@ -19,22 +17,15 @@ async function sendPassword(user) {
             user
         );
 
-        console.log(result);
         if(result.status === 200){
             alert("Password reset link has been send to your email!");
         }
         
-
-        // const token = result.data.token;
-        // localStorage.setItem('token', token);
-
-        // console.log("token: ",token)
         
         window.location.href = 'http://localhost:3000/login';
-        // display(result.data)
 
     } catch (error) {
-        console.error("Error while Login:", error);
+        // console.error("Error while Login:", error);
 
         const status = error.response?.status;
 

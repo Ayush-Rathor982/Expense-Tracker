@@ -932,8 +932,40 @@ td {
         gap: 17px;
     }
 
-    .expense-list {
-        grid-template-columns: 1fr;
+    .list-heading > :last-child {
+        gap: 35px;
+    }
+
+    #expenseList {
+        list-style: none;
+        display: flex;
+        gap: 18px;
+        flex-direction: column;
+    }
+
+    #expenseList li{
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    #expenseList li button{
+        padding: 7px 9px;
+    }
+
+    .expense-details{
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    .expense-details h3{
+        font-size: 1em;
+    }
+
+    #expenseList li p,
+    .expense-details span{
+        font-size: 12px;
     }
 
     .leaderboard-card {
@@ -963,6 +995,12 @@ td {
         width: 29px;
         height: 29px;
         min-width: 29px;
+    }
+
+    th{
+        font-size: 10px;
+        padding: 10px 5px;
+        font-weight: 700;
     }
 
 }

@@ -7,18 +7,19 @@ document.getElementById("renderBtn").addEventListener("click", async () => {
 
     const button = document.getElementById("renderBtn");
 
-    console.log(button)
-
     try {
 
         button.disabled = true;
 
+        const token = localStorage.getItem('token');       
+
         // Step 1: Create order
         const response = await fetch("http://localhost:3000/payment/pay", {
-            method: "POST"
+            method: "POST",
+            headers: {
+                'Authorization': token
+            }
         });
-
-        console.log("response: ", response)
 
         if (!response.ok) {
             throw new Error("Unable to create payment order");
@@ -29,7 +30,6 @@ document.getElementById("renderBtn").addEventListener("click", async () => {
         const paymentSessionId = data.paymentSessionId;
         const orderId = data.orderId;
 
-        console.log("data: ",data)
 
         // Step 2: Configure checkout
         const checkoutOptions = {
@@ -41,25 +41,25 @@ document.getElementById("renderBtn").addEventListener("click", async () => {
         const result = await cashfree.checkout(checkoutOptions);
 
         if (result.error) {
-            console.log("Checkout error:", result.error);
+            // console.log("Checkout error:", result.error);
+            alert("Checkout error:", result.error)
             return;
         }
 
         if (result.redirect) {
-            console.log("Payment is being redirected");
+            // console.log("Payment is being redirected");
+            alert('Payment is being redirected')
             return;
         }
 
         if (result.paymentDetails) {
 
-            console.log("Checkout completed");
-
             // Step 4: Verify payment from backend
             const statusResponse = await fetch(
-                `http://localhost:3000/payment/payment-status/${orderId}`
+                `http://localhost:3000/payment/payment-status/${orderId}`,
+                {headers:{'Authorization' : token}}
             );
 
-            console.log("payStatus: ",statusResponse);
 
             if (!statusResponse.ok) {
                 throw new Error("Unable to fetch payment status");
@@ -74,7 +74,7 @@ document.getElementById("renderBtn").addEventListener("click", async () => {
 
     } catch (error) {
 
-        console.error("Payment error:", error);
+        // console.error("Payment error:", error);
 
         alert(error.message);
 

@@ -1,28 +1,86 @@
+require('dotenv').config();
 const User = require('../models/Users')
 const jwt = require('jsonwebtoken')
-const mySecretKey = '180ab620f1708bb009f3e820bd5c9a6006bd30307fdba42b3050b602903860cf14301e392fe6849ee99ed5ac27ebca96bc9ab6d7eb8544df6c6ea9942a6932e3';
+const mySecretKey = process.env.JWT_Key
 
 
-const authenticate = (req,res,next) => {
+const authenticate = async (req, res, next) => {
     try {
         const token = req.header('Authorization');
-        console.log(token);
 
-        const user = jwt.verify(token, mySecretKey);
+        if (!token) {
+            return res.status(401).json({
+                success: false,
+                message: 'Authorization token missing'
+            });
+        }
 
-        console.log("user from token: ", user)
+        // Verify JWT token
+        const decoded = jwt.verify(token, mySecretKey);
 
-        User.findByPk(user.userId).then(user => {
-            req.user = user;
-            next();
-        });
+        // Find user in database
+        const user = await User.findByPk(decoded.userId);
+
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid User'
+            });
+        }
+
+        // Attach user to request
+        req.user = user;
+
+        next();
 
     } catch (error) {
-        console.log(error);
-        return res.status(401).json({success:false});
+
+        return res.status(401).json({
+            success: false,
+            message: 'Authentication failed'
+        });
     }
-}
+};
+
+
+const isPremium = async (req, res, next) => {
+    try {
+        // Get JWT from cookie
+        const token = req.cookies.token;
+
+        if (!token) {
+            return res.status(401).send('Please login first');
+        }
+
+        // Verify JWT
+        const decoded = jwt.verify(token, mySecretKey);
+
+        // Find user
+        const user = await User.findByPk(decoded.userId);
+
+        if (!user) {
+            return res.status(401).send('Invalid user');
+        }
+
+        // Check premium status
+        if (!user.isPremium) {
+            return res.status(403).send('You are not a premium user');
+        }
+
+        // Attach user to request
+        req.user = user;
+
+        next();
+
+    } catch (error) {
+
+        return res.status(401).send('Authentication failed');
+    }
+};
+
+
 
 module.exports = {
-    authenticate
+    authenticate,
+    isPremium
 }
