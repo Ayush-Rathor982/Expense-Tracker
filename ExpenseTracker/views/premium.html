@@ -205,8 +205,41 @@
 
             </div>
 
+            <button class="download-btn-file" id="downloadFileBtn" onclick="downloadExpenses()">
+                <span>↓</span> Download
+            </button>
+
         </section>
 
+
+        <!-- Downloaded List -->
+        <section class="downloaded-list-section">
+
+            <div class="list-heading">
+                <div>
+                    <h2>Your Downloaded List</h2>
+                    <p>Keep track of your past downloads.</p>
+                </div>
+            </div>
+
+            <table id="downloaded-table">
+
+                <thead>
+                    <tr>
+                        <th>date</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+
+                <tbody id="downloadedTable">
+
+                    <!-- Example rows: replace with backend data -->
+
+                </tbody>
+
+            </table>
+
+        </section>
 
 
 
@@ -378,7 +411,7 @@
     <script src="/js/premium/premium.js"></script>
     <script src="/js/predictCategory.js"></script>
     <script src="/js/premium/reportGenerate.js"></script>
-    <!-- <script src="/js/expense.js"></script> -->
+    <script src="/js/downloadedFiles.js"></script>
     
     <!-- Download pdf report for transactions (JavaScript) -->
     <!-- Load jsPDF -->

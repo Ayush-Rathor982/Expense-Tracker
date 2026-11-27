@@ -795,6 +795,68 @@ td {
 
 
 
+/* =====================================
+   Download files
+===================================== */
+
+#downloadFileBtn{
+    background: #3136bf;
+    color: white;
+    padding: 9px 15px;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.downloaded-list-section {
+    background: white;
+    /* padding: 26px; */
+    border: 1px solid #eeeeF3;
+    border-radius: 14px;
+
+    flex: 1;
+    min-width: 0;
+    padding: 35px 42px;
+    margin: 30px auto;
+
+    color: #202334;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.downloaded-list-section table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+.downloaded-list-section thead {
+    background: #fafaff;
+}
+
+.downloaded-list-section th {
+    color: #999baa;
+    font-size: 15px;
+    text-align: left;
+    padding: 15px 12px;
+    font-weight: 600;
+}
+
+.downloaded-list-section td {
+    padding: 17px 12px;
+    border-bottom: 1px solid #f0f0f5;
+    color: #666879;
+    font-size: 12px;
+    max-width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+
+
 
 
 /* =====================================
@@ -1052,6 +1114,20 @@ td {
 
     .download-btn {
         width: 100%;
+    }
+
+    .downloaded-list-section td {
+        padding: 14px 10px;
+        font-size: 10px;
+        max-width: 60px;
+        overflow: hidden;
+    }
+
+    .downloaded-list-section .list-heading h2{
+          font-size: 20px;
+    }
+    .downloaded-list-section .list-heading p{
+          font-size: 10px;
     }
 }
 

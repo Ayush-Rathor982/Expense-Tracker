@@ -1,8 +1,47 @@
 const { Sequelize } = require('sequelize');
 const Expenses = require('../models/Expenses')
 const Users = require('../models/Users')
+const DownloadedFiles = require('../models/downloadedFiles')
 const predictCategory = require('../services/geminiService');
 const sequelize = require('../utils/db-connection');
+const S3service = require('../services/S3services')
+
+
+
+
+
+
+
+const downloadExpenses = async (req,res) => {
+
+    try {
+        const userId = req.user.id;
+
+        const expenses = await Expenses.findAll({
+            where : {
+                UserId : userId
+            }
+        });
+
+        const date = new Date();
+
+        const stringifiedExpenses = JSON.stringify(expenses);
+        const filename = `Expenses${userId}/${date}.txt`;
+        const fileURL = await S3service.uploadToS3(stringifiedExpenses,filename);
+
+        // console.log("fileURL: ",fileURL)
+
+        await DownloadedFiles.create({
+            fileURL : fileURL,
+            date : date.toString(),
+            UserId : userId
+        })
+
+        res.status(200).json({fileURL, success: true})
+    } catch (err) {
+        res.status(500).json({fileURL : '', success: true, err: err})
+    }
+}
 
 
 
@@ -262,5 +301,6 @@ module.exports = {
     addExpense,
     getExpenses,
     deleteExpense,
-    findCategory
+    findCategory,
+    downloadExpenses
 }
